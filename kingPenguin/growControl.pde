@@ -12,7 +12,7 @@ void growControl() {
    undesirable result. */
 
   int allCells = Xbol * Ybol;
-  int coloredCells = redBorder + greenBorder + blueBorder + cyanBorder; //+ yellowBorder
+  int coloredCells = redBorder + greenBorder + cyanBorder; //+ yellowBorder + blueBorder
   int control = allCells - coloredCells + tolerance;
   int counterGrow = 0;
 
@@ -36,12 +36,12 @@ void growControl() {
     }
     if (counterGrow <= control) {
       growFilter();
-
+      growFilter();
       red.spaceNaming();
       //yellow.spaceNaming();
       green.spaceNaming();
       cyan.spaceNaming();
-      blue.spaceNaming();
+      //blue.spaceNaming();
 
       saveFrame("Results/alternative-##.png");
       setup();

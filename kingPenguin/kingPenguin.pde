@@ -9,7 +9,7 @@
 growCell red;
 growCell green;
 growCell cyan;
-growCell blue;
+//growCell blue;
 //growCell yellow; 
 
 int Xbol = 7; // Interior boundries of the module
@@ -19,13 +19,13 @@ int Ybol = 14; // Each cell has 50*50cm dimensions
 int redSize = 0; // Momentarily number of the cells
 int greenSize = 0;
 int cyanSize = 0;
-int blueSize = 0;
+//int blueSize = 0;
 //int yellowSize = 0;
 
 int redBorder = 38; // Intended number of the cells
 int greenBorder = 20;
-int cyanBorder = 34;
-int blueBorder = 6;
+int cyanBorder = 40;
+//int blueBorder = 6;
 //int yellowBorder = 25;
 
 
@@ -43,7 +43,7 @@ void setup()
 
   red = new growCell("Common Area", 1, redSize, redBorder, 255, 0, 0);
   green = new growCell("Personal Area", 2, greenSize, greenBorder, 0, 255, 0);
-  blue = new growCell("Wet Area", 3, blueSize, blueBorder, 0, 0, 255);
+  //blue = new growCell("Wet Area", 3, blueSize, blueBorder, 0, 0, 255);
   //yellow = new growCell("Kitchen", 4, yellowSize, yellowBorder, 255, 255, 0);
   cyan = new growCell("Entrance", 5, cyanSize, cyanBorder, 0, 255, 255);
 
@@ -51,7 +51,7 @@ void setup()
   redSize = 0;
   greenSize = 0;
   cyanSize = 0;
-  blueSize = 0;
+  //blueSize = 0;
   //yellowSize = 0;
   loopCounter = 0;
 
@@ -81,7 +81,7 @@ Below, one cell for each color - which represents different spaces - are created
   }
   
   red.firstCell();
-  blue.firstCell();
+  //blue.firstCell();
   green.firstCell();
   //yellow.firstCell();
 
@@ -94,12 +94,12 @@ void draw()
 
   red.growing();
   green.growing();
-  blue.growing();
+  //blue.growing();
   //yellow.growing();
   cyan.growing();
   red.cornerCell();
   green.cornerCell();
-  blue.cornerCell();
+  //blue.cornerCell();
   //yellow.cornerCell();
   cyan.cornerCell();
   growControl();
