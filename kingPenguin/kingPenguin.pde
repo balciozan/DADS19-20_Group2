@@ -7,9 +7,9 @@
 int Xbol = 7; // Interior boundries of the module
 int Ybol = 14; // Each cell has 50*50cm dimensions
 
-int redBorder = 38; // Intended number of the cells
-int greenBorder = 20;
-int cyanBorder = 40;
+int redBorder = 68; // Intended number of the cells
+int greenBorder = 10;
+int cyanBorder = 20;
 //int blueBorder = 6;
 //int yellowBorder = 25;
 
