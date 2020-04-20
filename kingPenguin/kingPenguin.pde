@@ -5,7 +5,7 @@
 
 
 int Xbol = 7; // Interior boundries of the module
-int Ybol = 14; // Each cell has 50*50cm dimensions
+int Ybol = 14; // Each cell has 50*50 cm dimensions
 
 int redBorder = 68; // Intended number of the cells
 int greenBorder = 10;
@@ -39,8 +39,8 @@ void setup()
   size(400, 800);
   background(255);
 
-  red = new growCell("Common Area", 1, redSize, redBorder, 255, 0, 0);
-  green = new growCell("Personal Area", 2, greenSize, greenBorder, 0, 255, 0);
+  red = new growCell("Living Space", 1, redSize, redBorder, 255, 0, 0);
+  green = new growCell("Wet Area", 2, greenSize, greenBorder, 0, 255, 0);
   //blue = new growCell("Wet Area", 3, blueSize, blueBorder, 0, 0, 255);
   //yellow = new growCell("Kitchen", 4, yellowSize, yellowBorder, 255, 255, 0);
   cyan = new growCell("Entrance", 5, cyanSize, cyanBorder, 0, 255, 255);
