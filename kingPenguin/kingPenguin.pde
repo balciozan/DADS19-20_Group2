@@ -3,9 +3,6 @@
 // Version 17.1
 
 
-
-
-
 growCell red;
 growCell green;
 growCell cyan;
@@ -71,7 +68,7 @@ Below, one cell for each color - which represents different spaces - are created
    randomly in order to generate alternative organizations. Each color - space - different
    int value to make further calculations.
    */
- 
+
   matrix[3][1] = 5; // Only the first cyan - entrance - cell is not random since the entrance is fixed.
   if (matrix[3][1]== 5)
   {
@@ -79,12 +76,11 @@ Below, one cell for each color - which represents different spaces - are created
     noStroke();
     rect((width/Xbol)*3, (height/Ybol), (width/Xbol), (height/Ybol));
   }
-  
+
   red.firstCell();
   //blue.firstCell();
   green.firstCell();
   //yellow.firstCell();
-
 }
 
 
@@ -103,8 +99,6 @@ void draw()
   //yellow.cornerCell();
   cyan.cornerCell();
   growControl();
-  
-  
 }
 
 
