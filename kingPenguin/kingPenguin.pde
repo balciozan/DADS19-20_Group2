@@ -3,11 +3,6 @@
 // Version 17.1
 
 
-growCell red;
-growCell green;
-growCell cyan;
-//growCell blue;
-//growCell yellow; 
 
 int Xbol = 7; // Interior boundries of the module
 int Ybol = 14; // Each cell has 50*50cm dimensions
@@ -28,6 +23,12 @@ int greenSize = 0;
 int cyanSize = 0;
 //int blueSize = 0;
 //int yellowSize = 0;
+
+growCell red;
+growCell green;
+growCell cyan;
+//growCell blue;
+//growCell yellow; 
 
 
 int [][] matrix = new int[Xbol][Ybol]; 
