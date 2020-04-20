@@ -12,6 +12,16 @@ growCell cyan;
 int Xbol = 7; // Interior boundries of the module
 int Ybol = 14; // Each cell has 50*50cm dimensions
 
+int redBorder = 38; // Intended number of the cells
+int greenBorder = 20;
+int cyanBorder = 40;
+//int blueBorder = 6;
+//int yellowBorder = 25;
+
+int tolerance = 4; // Negligible amount of missing - uncolored - cells
+int cycleTime = 300;
+int loopCounter = 0;
+
 
 int redSize = 0; // Momentarily number of the cells
 int greenSize = 0;
@@ -19,16 +29,6 @@ int cyanSize = 0;
 //int blueSize = 0;
 //int yellowSize = 0;
 
-int redBorder = 38; // Intended number of the cells
-int greenBorder = 20;
-int cyanBorder = 40;
-//int blueBorder = 6;
-//int yellowBorder = 25;
-
-
-int tolerance = 4; // Negligible amount of missing - uncolored - cells
-int cycleTime = 300;
-int loopCounter = 0;
 
 int [][] matrix = new int[Xbol][Ybol]; 
 
