@@ -24,6 +24,8 @@ int cyanSize = 0;
 //int blueSize = 0;
 //int yellowSize = 0;
 
+int objectTrigger = 0;
+
 growCell red;
 growCell green;
 growCell cyan;
@@ -52,6 +54,7 @@ void setup()
   //blueSize = 0;
   //yellowSize = 0;
   loopCounter = 0;
+  objectTrigger = 0;
 
 
 
@@ -87,19 +90,8 @@ Below, one cell for each color - which represents different spaces - are created
 
 void draw()
 {
-
-
-  red.growing();
-  green.growing();
-  //blue.growing();
-  //yellow.growing();
-  cyan.growing();
-  red.cornerCell();
-  green.cornerCell();
-  //blue.cornerCell();
-  //yellow.cornerCell();
-  cyan.cornerCell();
-  growControl();
+  grow();
+  objectPlace();
 }
 
 

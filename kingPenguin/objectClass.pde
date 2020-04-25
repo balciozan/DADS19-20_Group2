@@ -39,4 +39,8 @@ class objectClass
     objectG = oG;
     objectB = oB;
   }
+  
+  
+  
+  
 }

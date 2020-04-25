@@ -42,8 +42,7 @@ void growControl() {
       cyan.spaceNaming();
       //blue.spaceNaming();
 
-      saveFrame("Results/alternative-##.png");
-      setup();
+      objectTrigger++;
     }
   }
 }
