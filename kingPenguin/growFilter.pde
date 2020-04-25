@@ -34,27 +34,27 @@ void growFilter() {
       }
       if (filter1 >= 5) {
         matrix[newi][newi] = 1;
-        fill(255, 0, 0, 50);
+        fill(247, 207, 206);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter2 >= 5) {
         matrix[newi][newi] = 2;
-        fill(0, 255, 0, 50);
+        fill(215, 253, 209);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter3 >= 5) {
         matrix[newi][newi] = 3;
-        fill(0, 0, 255, 50);
+        fill(0, 0, 255);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter4 >= 5) {
         matrix[newi][newi] = 4;
-        fill(255, 255, 0, 50);
+        fill(255, 255, 0);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter5 >= 5) {
         matrix[newi][newi] = 5;
-        fill(0, 255, 255, 50);
+        fill(215, 253, 254);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       }
@@ -95,27 +95,27 @@ void growFilter() {
       }
       if (filter1 >= 2) {
         matrix[newi][newi] = 1;
-        fill(255, 0, 0, 50);
+        fill(247, 207, 206);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter2 >= 2) {
         matrix[newi][newi] = 2;
-        fill(0, 255, 0, 50);
+        fill(215, 253, 209);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter3 >= 2) {
         matrix[newi][newi] = 3;
-        fill(0, 0, 255, 50);
+        fill(0, 0, 255);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter4 >= 2) {
         matrix[newi][newi] = 4;
-        fill(255, 255, 0, 50);
+        fill(255, 255, 0);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       } else if (filter5 >= 2) {
         matrix[newi][newi] = 5;
-        fill(0, 255, 255, 50);
+        fill(215, 253, 254);
         noStroke();
         rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
       }

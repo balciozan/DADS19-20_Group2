@@ -1,8 +1,7 @@
 void objects() {
   if (objectTrigger == 1) {
     masa.referenceObject();
-
-
+    sandalye.referenceObject();
 
 
 

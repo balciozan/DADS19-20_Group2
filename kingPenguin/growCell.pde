@@ -58,7 +58,7 @@ class growCell
               if (matrix[i][j]== colorValue)
               {
 
-                fill(colorR, colorG, colorB, 50);
+                fill(colorR, colorG, colorB);
                 noStroke();
                 rect((width/Xbol)*i, (height/Ybol)*j, (width/Xbol), (height/Ybol));
                 successFirst = 1;
@@ -82,7 +82,7 @@ class growCell
               if (matrix[i][j]== colorValue)
               {
 
-                fill(colorR, colorG, colorB, 50);
+                fill(colorR, colorG, colorB);
                 noStroke();
                 rect((width/Xbol)*i, (height/Ybol)*j, (width/Xbol), (height/Ybol));
                 successFirst = 1;
@@ -106,7 +106,7 @@ class growCell
               if (matrix[i][j]== colorValue)
               {
 
-                fill(colorR, colorG, colorB, 50);
+                fill(colorR, colorG, colorB);
                 noStroke();
                 rect((width/Xbol)*i, (height/Ybol)*j, (width/Xbol), (height/Ybol));
                 successFirst = 1;
@@ -130,7 +130,7 @@ class growCell
               if (matrix[i][j]== colorValue)
               {
 
-                fill(colorR, colorG, colorB, 50);
+                fill(colorR, colorG, colorB);
                 noStroke();
                 rect((width/Xbol)*i, (height/Ybol)*j, (width/Xbol), (height/Ybol));
                 successFirst = 1;
@@ -182,25 +182,25 @@ class growCell
 
     if (matrix[0][0] == 0 && matrix[1][0] == colorValue && matrix[0][1] == colorValue) {
       matrix[0][0] = colorValue;
-      fill(colorR, colorG, colorB, 50);
+      fill(colorR, colorG, colorB);
       noStroke();
       rect((0), (0), (width/Xbol), (height/Ybol));
     }
     if (matrix[0][Ybol-1] == 0 && matrix[1][Ybol-1] == colorValue && matrix[0][Ybol-2] == colorValue) {
       matrix[0][Ybol-1] = colorValue;
-      fill(colorR, colorG, colorB, 50);
+      fill(colorR, colorG, colorB);
       noStroke();
       rect((0), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
     }
     if (matrix[Xbol-1][0] == 0 && matrix[Xbol-1][1] == colorValue && matrix[Xbol-2][0] == colorValue) {
       matrix[Xbol-1][0] = colorValue;
-      fill(colorR, colorG, colorB, 50);
+      fill(colorR, colorG, colorB);
       noStroke();
       rect((width/Xbol)*(Xbol-1), (0), (width/Xbol), (height/Ybol));
     }
     if (matrix[Xbol-1][Ybol-1] == 0 && matrix[Xbol-2][Ybol-1] == colorValue && matrix[Xbol-1][Ybol-2] == colorValue) {
       matrix[Xbol-1][Ybol-1] = colorValue;
-      fill(colorR, colorG, colorB, 50);
+      fill(colorR, colorG, colorB);
       noStroke();
       rect((width/Xbol)*(Xbol-1), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
     }
@@ -265,7 +265,7 @@ class growCell
             success3 = 1;
             colorSize++;
             matrix[newi][newj] = colorValue;
-            fill(colorR, colorG, colorB, 50);
+            fill(colorR, colorG, colorB);
             noStroke();
             rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
           } else if (whilecnt > 8000) {

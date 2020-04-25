@@ -56,21 +56,24 @@ class objectClass
       }
     }
     int success1 = 0;
+    int whilecnt = 0;
     while (success1 == 0) {
       int rand = 0;
       int realX = 0;
       int realY = 0;
-      int whilecnt = 0;
+
+      whilecnt++;
 
       rand = int(random(0, listX.size())); 
+
 
       realX = listX.get(rand);
       realY = listY.get(rand);
 
-      if (realX + objectWidth <= listX.max() && realY + objectDepth <= listY.max()) {
-        for (int i = realX; i < realX + objectWidth + 1; i++)
+      if (realX + objectWidth -1 <= listX.max() && realY + objectDepth -1 <= listY.max()) {
+        for (int i = realX; i < realX + objectWidth; i++)
         {
-          for (int j= realY; j< realY + objectDepth + 1; j++)
+          for (int j= realY; j< realY + objectDepth; j++)
           {
             int newi = i;
             int newj = j;
@@ -81,10 +84,9 @@ class objectClass
           }
         }
         success1++;
-      } else if (whilecnt == 5000) {
+      } else if (whilecnt == 1000) {
         success1++;
       }
-      whilecnt++;
     }
   }
 }

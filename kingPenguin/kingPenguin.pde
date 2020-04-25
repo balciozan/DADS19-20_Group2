@@ -34,6 +34,7 @@ growCell cyan;
 //growCell yellow; 
 
 objectClass masa;
+objectClass sandalye;
 
 
 int [][] matrix = new int[Xbol][Ybol]; 
@@ -44,16 +45,17 @@ void setup()
   size(400, 800);
   background(255);
 
-  red = new growCell("Living Space", 1, redSize, redBorder, 255, 0, 0);
-  green = new growCell("Wet Area", 2, greenSize, greenBorder, 0, 255, 0);
+  red = new growCell("Living Space", 1, redSize, redBorder, 247, 207, 206);
+  green = new growCell("Wet Area", 2, greenSize, greenBorder, 215, 253, 209);
   //blue = new growCell("Wet Area", 3, blueSize, blueBorder, 0, 0, 255);
   //yellow = new growCell("Kitchen", 4, yellowSize, yellowBorder, 255, 255, 0);
-  cyan = new growCell("Entrance", 5, cyanSize, cyanBorder, 0, 255, 255);
+  cyan = new growCell("Entrance", 5, cyanSize, cyanBorder, 215, 253, 254);
 
 
 
-
-  masa = new objectClass("Living Space", 101, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100);
+  //objectClass(String oName, int oValue, int oZoneValue, int oWidth, int oDepth, int oHeight, int oMarLeft, int oMarRight, int oMarFront, int oMarRear, int oFixed, int oSource, int oR, int oG, int oB)
+  masa = new objectClass("Masa", 101, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100);
+  sandalye = new objectClass("Dusakabin", 102, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 200, 200, 200);
 
   redSize = 0;
   greenSize = 0;
@@ -82,7 +84,7 @@ Below, one cell for each color - which represents different spaces - are created
   matrix[3][1] = 5; // Only the first cyan - entrance - cell is not random since the entrance is fixed.
   if (matrix[3][1]== 5)
   {
-    fill(0, 255, 255, 50);
+    fill(215, 253, 254);
     noStroke();
     rect((width/Xbol)*3, (height/Ybol), (width/Xbol), (height/Ybol));
   }
