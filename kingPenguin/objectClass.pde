@@ -89,4 +89,13 @@ class objectClass
       }
     }
   }
+  
+  void nextTo(){
+  
+  }
+  
+  
+  
+  
+  
 }
