@@ -26,11 +26,14 @@ int cyanSize = 0;
 
 int objectTrigger = 0;
 
+
 growCell red;
 growCell green;
 growCell cyan;
 //growCell blue;
 //growCell yellow; 
+
+objectClass masa;
 
 
 int [][] matrix = new int[Xbol][Ybol]; 
@@ -48,6 +51,10 @@ void setup()
   cyan = new growCell("Entrance", 5, cyanSize, cyanBorder, 0, 255, 255);
 
 
+
+
+  masa = new objectClass("Living Space", 101, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100);
+
   redSize = 0;
   greenSize = 0;
   cyanSize = 0;
@@ -55,7 +62,6 @@ void setup()
   //yellowSize = 0;
   loopCounter = 0;
   objectTrigger = 0;
-
 
 
 
@@ -76,7 +82,7 @@ Below, one cell for each color - which represents different spaces - are created
   matrix[3][1] = 5; // Only the first cyan - entrance - cell is not random since the entrance is fixed.
   if (matrix[3][1]== 5)
   {
-    fill(0, 255, 255);
+    fill(0, 255, 255, 50);
     noStroke();
     rect((width/Xbol)*3, (height/Ybol), (width/Xbol), (height/Ybol));
   }
@@ -91,7 +97,7 @@ Below, one cell for each color - which represents different spaces - are created
 void draw()
 {
   grow();
-  objectPlace();
+  objects();
 }
 
 
