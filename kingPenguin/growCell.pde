@@ -243,20 +243,20 @@ class growCell
           int newi = i;
           int newj = j;
 
-          float eksen = random(-1, 1);
+          float axis = random(-1, 1);
 
-          if (eksen > 0) {
-            float eksenx = random(-1, 1);
-            if (eksenx > 0) {
+          if (axis > 0) {
+            float axisX = random(-1, 1);
+            if (axisX > 0) {
               newi = i+1;
-            } else if (eksenx <= 0) {
+            } else if (axisX <= 0) {
               newi = i-1;
             }
-          } else if (eksen <= 0) {
-            float ekseny = random(-1, 1);
-            if (ekseny > 0) {
+          } else if (axis <= 0) {
+            float axisY = random(-1, 1);
+            if (axisY > 0) {
               newj = j+1;
-            } else if (ekseny <= 0) {
+            } else if (axisY <= 0) {
               newj = j-1;
             }
           }

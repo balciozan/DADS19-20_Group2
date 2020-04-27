@@ -122,17 +122,86 @@ class objectClass
       rand = int(random(0, listX.size())); 
       realX = listX.get(rand);
       realY = listY.get(rand);
-      
+
       int success2 = 0;
       int whilecnt2 = 0;
-      while(success2 == 0 ){
-      
-      
-      
-      
-      
+      while (success2 == 0 ) {
+        whilecnt2++;
+        float axis = random(-1, 1); // decides randomly where to put the object
+
+        if (axis > 0) {
+          float axisX = random(-1, 1);
+          if (axisX > 0 && matrix[realX + 1][realY] == objectZoneValue && matrix[realX + objectWidth][realY + objectDepth - 1] == objectZoneValue) {  // right
+            for (int i = realX + 1; i < realX + objectWidth + 1; i++)
+            {
+              for (int j= realY; j< realY + objectDepth; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
+            }
+            success2++;
+            success1++;
+          } else if (axisX <= 0 && matrix[realX - objectWidth][realY] == objectZoneValue && matrix[realX -1][realY + objectDepth - 1] == objectZoneValue) { // left
+            for (int i = realX - objectWidth; i < realX; i++)
+            {
+              for (int j= realY; j< realY + objectDepth; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
+            }
+            success2++;
+            success1++;
+          }
+        } else if (axis <= 0) {
+          float axisY = random(-1, 1);
+          if (axisY > 0 && matrix[realX][realY - objectDepth] == objectZoneValue && matrix[realX + objectWidth - 1][realY - 1] == objectZoneValue) {  // up
+            for (int i = realX; i < realX + objectWidth; i++)
+            {
+              for (int j= realY - objectDepth; j< realY; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
+            }
+            success2++;
+            success1++;
+          } else if (axisY <= 0 && matrix[realX][realY + 1] == objectZoneValue && matrix[realX + objectWidth - 1][realY + objectDepth] == objectZoneValue) {  // down
+            for (int i = realX; i < realX + objectWidth; i++)
+            {
+              for (int j= realY + 1; j< realY + objectDepth; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
+            }
+            success2++;
+            success1++;
+          }
+        } else if (whilecnt2 >= 10000) {
+          success2++;
+        }
       }
-            
+      if (whilecnt >= 5000) {
+        success1++;
+      }
     }
   }
 }
