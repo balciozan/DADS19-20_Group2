@@ -33,8 +33,8 @@ growCell cyan;
 //growCell blue;
 //growCell yellow; 
 
-objectClass masa;
-objectClass sandalye;
+objectClass table;
+objectClass chair;
 
 
 int [][] matrix = new int[Xbol][Ybol]; 
@@ -54,9 +54,8 @@ void setup()
 
 
   //objectClass(String oName, int oValue, int oZoneValue, int oWidth, int oDepth, int oHeight, int oMarLeft, int oMarRight, int oMarFront, int oMarRear, int oFixed, int oSource, int oR, int oG, int oB)
-  masa = new objectClass("Masa", 101, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100);
-  sandalye = new objectClass("Dusakabin", 102, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 200, 200, 200);
-
+  table = new objectClass("table", 101, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100);
+  chair = new objectClass("chair", 111, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 90, 200, 90);
   redSize = 0;
   greenSize = 0;
   cyanSize = 0;

@@ -91,7 +91,48 @@ class objectClass
   }
 
   void placeObject(int refObject, int method, int dist) {
-    
-    
+    // refObject is the reference for the object to be placed.
+    // method can have 3 values for now. 0 = no relation / 1 = near to / 2 = next to.
+    // if the method is equal to 1, dist will determine the range.
+    listX = new IntList();
+    listY = new IntList();
+    listX.clear();
+    listY.clear();
+
+    for (int j=0; j< Ybol; j++)
+    {
+      for (int i=0; i< Xbol; i++)
+      {
+        if (matrix[i][j] == refObject) {
+          listX.append(i);
+          listY.append(j);
+        }
+      }
+    }
+
+    int success1 = 0;
+    int whilecnt = 0;
+    while (success1 == 0) {
+      int rand = 0;
+      int realX = 0;
+      int realY = 0;
+
+      whilecnt++;
+
+      rand = int(random(0, listX.size())); 
+      realX = listX.get(rand);
+      realY = listY.get(rand);
+      
+      int success2 = 0;
+      int whilecnt2 = 0;
+      while(success2 == 0 ){
+      
+      
+      
+      
+      
+      }
+            
+    }
   }
 }

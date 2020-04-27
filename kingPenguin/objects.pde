@@ -1,13 +1,7 @@
 void objects() {
   if (objectTrigger == 1) {
-    masa.referenceObject();
-    sandalye.referenceObject();
-
-
-
-
-
-
+    table.referenceObject();
+    chair.placeObject(101, 2, 0);
 
     saveFrame("Results/alternative-##.png");
     setup();
