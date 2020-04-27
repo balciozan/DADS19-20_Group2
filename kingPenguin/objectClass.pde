@@ -89,13 +89,9 @@ class objectClass
       }
     }
   }
-  
-  void nextTo(){
-  
+
+  void placeObject(int refObject, int method, int dist) {
+    
+    
   }
-  
-  
-  
-  
-  
 }
