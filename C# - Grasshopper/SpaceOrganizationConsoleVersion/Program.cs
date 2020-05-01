@@ -1171,6 +1171,11 @@ public class Script_Instance : GH_ScriptInstance
 
     }
 
+    public override void InvokeRunScript(IGH_Component owner, object rhinoDocument, int iteration, List<object> inputs, IGH_DataAccess DA)
+    {
+        throw new NotImplementedException();
+    }
+
 
 
 
