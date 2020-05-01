@@ -611,9 +611,16 @@ namespace SpaceOrganizationConsoleVersion
 
         }
 
-        static void createWall()
+        public void createWall()
         {
-
+            for (int i = 0; i < Xcell; i++)
+            {
+                for (int j = 0; j < Ycell; i++)
+                {
+                    if emptyFullArray[Xcell,Ycell]== 0
+                }
+            }
+            Math.Ceiling((double)(PreviousObject.MrjWidth / CellSize));
         }
 
 
