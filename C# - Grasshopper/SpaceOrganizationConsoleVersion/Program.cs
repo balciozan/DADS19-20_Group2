@@ -57,20 +57,25 @@ public class Script_Instance : GH_ScriptInstance
     private void RunScript(object x, int Width, int Length, int Height, int LevelHeight, int cellSize, Box ConnectionPoint, Box ConnectionPointMargin, Box ChangeOverZone, Box ChangeOverZoneMargin, ref object A, ref object R, ref object G, ref object B, ref object Y, ref object K, ref object W, ref object Bxx, ref object Furnitures, ref object FurnituresMargins)
     {
 
+
         List<Box> entranceBoxes = new List<Box>();
+        List<Box> commonBoxes = new List<Box>();
         List<Box> wetAreaBoxes = new List<Box>();
-        List<Box> personalSpaceBoxes = new List<Box>();
-        List<Box> kitchenBoxes = new List<Box>();
-        List<Box> commonAreaBoxes = new List<Box>();
+
+        /*List<Box> kitchenBoxes = new List<Box>();
+        List<Box> commonAreaBoxes = new List<Box>();*/
+
         List<Box> WhiteBoxes = new List<Box>();
 
-        /**           These sizes are Spreading Limits for the spaces   //total cells           **/
+        /**  These sizes are Spreading Limits for the spaces   //total cells     **/
 
-        double entranceSize = 3 * 100 * 100 / cellSize * cellSize;
-        double personalSpaceSize = 3 * 100 * 100 / cellSize * cellSize;
-        double wetAreaSize = 2.5 * 100 * 100 / cellSize * cellSize;
-        double kitchenSize = 5 * 100 * 100 / cellSize * cellSize; ;
-        double commonAreaSize = 10 * 100 * 100 / cellSize * cellSize; ;
+        double entranceSize = (2 * 100 * 100) / (cellSize * cellSize);
+        double commonSize = (3 * 100 * 100) / (cellSize * cellSize);
+        double wetAreaSize = (1 * 100 * 100) / (cellSize * cellSize);
+
+        /*double kitchenSize = 7 * 100 * 100 / cellSize * cellSize;
+        double commonAreaSize = 10 * 100 * 100 / cellSize * cellSize;
+      */
 
         Point3d pA = new Point3d(0, 0, 0);
         Point3d pB = new Point3d(10, 0, 0);
@@ -87,16 +92,26 @@ public class Script_Instance : GH_ScriptInstance
         int[,,] areaArray = InitializeZeroMatrice(length, width, levelNumber);
         StartZones(areaArray);
 
-        int[,,] emptyFullArray = InitializeZeroMatrice(length, width, levelNumber);
+        // int[,,] emptyFullArray = InitializeZeroMatrice(length, width, levelNumber);
 
         for (int i = 0; i < width * length * 3; i++)
         {
-            Rhino.RhinoApp.WriteLine("Loop Runs" + i.ToString());
+            Rhino.RhinoApp.WriteLine("\n Loop Runs" + i.ToString());
+
             Spread(areaArray, ref entranceSize, entranceList, ref entranceCounter, entranceLimit, cellSize);
-            Spread(areaArray, ref personalSpaceSize, personalSpaceList, ref personalSpaceCounter, personalSpaceLimit, cellSize);
+            Rhino.RhinoApp.WriteLine("Entrance size" + entranceSize.ToString());
+            Rhino.RhinoApp.WriteLine("Entrance counter" + entranceCounter.ToString());
+            Rhino.RhinoApp.WriteLine("\n ");
+
+
+            Spread(areaArray, ref commonSize, commonList, ref commonCounter, commonLimit, cellSize);
+            Rhino.RhinoApp.WriteLine("Common size" + commonSize.ToString());
+            Rhino.RhinoApp.WriteLine("Common counter" + commonCounter.ToString());
+
             Spread(areaArray, ref wetAreaSize, wetAreaList, ref wetAreaCounter, wetAreaLimit, cellSize);
-            Spread(areaArray, ref kitchenSize, kitchenList, ref kitchenCounter, kitchenLimit, cellSize);
-            Spread(areaArray, ref commonAreaSize, commonAreaList, ref commonAreaCounter, commonAreaLimit, cellSize);
+
+            /*Spread(areaArray, ref kitchenSize, kitchenList, ref kitchenCounter, kitchenLimit, cellSize);
+            Spread(areaArray, ref commonAreaSize, commonAreaList, ref commonAreaCounter, commonAreaLimit, cellSize);*/
         }
 
         noiseFilter(areaArray, 0, 6, 5);
@@ -112,23 +127,23 @@ public class Script_Instance : GH_ScriptInstance
                 }
             }
         }
-
-        for (int k = 0; k < levelNumber; k++)
-        {
-            for (int i = 0; i < length; i++)
+        /*
+            for (int k = 0;k < levelNumber;k++)
             {
-                for (int j = 0; j < width; j++)
+              for (int i = 0;i < length;i++)
+              {
+                for (int j = 0;j < width;j++)
                 {
-                    emptyFullArray[i, j, k] = 0;
+                  emptyFullArray[i, j, k] = 0;
                 }
+              }
             }
-        }
-
+        */
         entranceList.Clear();
-        personalSpaceList.Clear();
+        commonList.Clear();
         wetAreaList.Clear();
-        kitchenList.Clear();
-        commonAreaList.Clear();
+        /*kitchenList.Clear();
+        commonAreaList.Clear();*/
 
         for (int k = 0; k < levelNumber; k++)
         {
@@ -163,29 +178,29 @@ public class Script_Instance : GH_ScriptInstance
                         Interval zInterval = new Interval(k * LevelHeight, k * LevelHeight + levelHeight);
 
                         Box boxgh = new Box(p, xInterval, yInterval, zInterval);
-                        personalSpaceBoxes.Add(boxgh);
-                        personalSpaceList.AddRange(new int[2] { i, j });
+                        commonBoxes.Add(boxgh);
+                        commonList.AddRange(new int[2] { i, j });
                     }
-                    if (areaArray[i, j, k] == 4)
+                    /*if (areaArray[i, j, k] == 4)
                     {
-                        Interval xInterval = new Interval(j * cellSize, (j + 1) * (cellSize));
-                        Interval yInterval = new Interval(i * cellSize, (i + 1) * (cellSize));
-                        Interval zInterval = new Interval(k * LevelHeight, k * LevelHeight + levelHeight);
+                      Interval xInterval = new Interval(j * cellSize, (j + 1) * (cellSize ));
+                      Interval yInterval = new Interval(i * cellSize, (i + 1) * (cellSize ));
+                      Interval zInterval = new Interval(k * LevelHeight, k * LevelHeight + levelHeight);
 
-                        Box boxgh = new Box(p, xInterval, yInterval, zInterval);
-                        kitchenBoxes.Add(boxgh);
-                        kitchenList.AddRange(new int[2] { i, j });
+                      Box boxgh = new Box(p, xInterval, yInterval, zInterval);
+                      kitchenBoxes.Add(boxgh);
+                      kitchenList.AddRange(new int[2] { i, j });
                     }
                     if (areaArray[i, j, k] == 5)
                     {
-                        Interval xInterval = new Interval(j * cellSize, (j + 1) * (cellSize));
-                        Interval yInterval = new Interval(i * cellSize, (i + 1) * (cellSize));
-                        Interval zInterval = new Interval(k * LevelHeight, k * LevelHeight + levelHeight);
+                      Interval xInterval = new Interval(j * cellSize, (j + 1) * (cellSize ));
+                      Interval yInterval = new Interval(i * cellSize, (i + 1) * (cellSize ));
+                      Interval zInterval = new Interval(k * LevelHeight, k * LevelHeight + levelHeight);
 
-                        Box boxgh = new Box(p, xInterval, yInterval, zInterval);
-                        commonAreaBoxes.Add(boxgh);
-                        commonAreaList.AddRange(new int[2] { i, j });
-                    }
+                      Box boxgh = new Box(p, xInterval, yInterval, zInterval);
+                      commonAreaBoxes.Add(boxgh);
+                      commonAreaList.AddRange(new int[2] { i, j });
+                    }*/
                     if (areaArray[i, j, k] == 0)
                     {
 
@@ -200,91 +215,91 @@ public class Script_Instance : GH_ScriptInstance
                 }
             }
         }
+        /*
+          var connectionPointO = new Objects
+            {
+              Name = "changeOverZone",
+              ZoneName = 2,
 
-        var connectionPointO = new Objects
-        {
-            Name = "changeOverZone",
-            ZoneName = 2,
+              Obj = ConnectionPoint,
+              ObjMargin = ConnectionPointMargin,
 
-            Obj = ConnectionPoint,
-            ObjMargin = ConnectionPointMargin,
+              Front = true,
+              Right = true,
+              Back = false,
+              Left = false,
+              Top = false,
+              Bottom = false,
 
-            Front = true,
-            Right = true,
-            Back = false,
-            Left = false,
-            Top = false,
-            Bottom = false,
+              RotationBool = false,
+              RotationOpt = 2,
 
-            RotationBool = false,
-            RotationOpt = 2,
+              MirrorBool = false,
+              MirrorOpt = 2,
 
-            MirrorBool = false,
-            MirrorOpt = 2,
+              Source = "NULL",
+              FixedToWall = 1,
 
-            Source = "NULL",
-            FixedToWall = 1,
+              CellSize = 60,
+              SpaceList = entranceList,
 
-            CellSize = 60,
-            SpaceList = entranceList,
+              //PreviousObject = changeOverZoneO
 
-            //PreviousObject = changeOverZoneO
+              };
 
-        };
+          var changeOverZoneO = new Objects
+            {
+              Name = "changeOverZone",
+              ZoneName = 2,
 
-        var changeOverZoneO = new Objects
-        {
-            Name = "changeOverZone",
-            ZoneName = 2,
+              Obj = ChangeOverZone,
+              ObjMargin = ChangeOverZoneMargin,
 
-            Obj = ChangeOverZone,
-            ObjMargin = ChangeOverZoneMargin,
+              Front = true,
+              Right = true,
+              Back = false,
+              Left = false,
+              Top = false,
+              Bottom = false,
 
-            Front = true,
-            Right = true,
-            Back = false,
-            Left = false,
-            Top = false,
-            Bottom = false,
+              RotationBool = false,
+              RotationOpt = 2,
 
-            RotationBool = false,
-            RotationOpt = 2,
+              MirrorBool = false,
+              MirrorOpt = 2,
 
-            MirrorBool = false,
-            MirrorOpt = 2,
+              Source = "NULL",
+              FixedToWall = 1,
+              CellSize = 60,
 
-            Source = "NULL",
-            FixedToWall = 1,
-            CellSize = 60,
+              PreviousObject = connectionPointO,
+              SpaceList = entranceList,
 
-            PreviousObject = connectionPointO,
-            SpaceList = entranceList,
+              };
 
-        };
+          connectionPointO.placeRefObject();
+      */
+        /*
+            var randd = new Random();
+            //var entranceList = new List<int>();
+            //entranceList.Add(3);entranceList.Add(4);
+            Rhino.RhinoApp.WriteLine(entranceList.Count().ToString());
+            var randomIndex = randd.Next(entranceList.Count / 2);
+            int a = entranceList[2 * randomIndex];
+            int b = entranceList[2 * randomIndex + 1];
 
-        connectionPointO.placeRefObject();
+            Point3d pointa = new Point3d(0 * cellSize, b * cellSize, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
 
+            Plane planebase = new Plane(pointa, pointb);
 
-        var randd = new Random();
-        //var entranceList = new List<int>();
-        //entranceList.Add(3);entranceList.Add(4);
-        Rhino.RhinoApp.WriteLine(entranceList.Count().ToString());
-        var randomIndex = randd.Next(entranceList.Count / 2);
-        int a = entranceList[2 * randomIndex];
-        int b = entranceList[2 * randomIndex + 1];
+            Box boxx = new Box(planebase, ConnectionPoint.Y, ConnectionPoint.X, ConnectionPoint.Z);
 
-        Point3d pointa = new Point3d(0 * cellSize, b * cellSize, 0);
-        Vector3d pointb = new Vector3d(0, 0, 1);
-
-        Plane planebase = new Plane(pointa, pointb);
-
-        Box boxx = new Box(planebase, ConnectionPoint.Y, ConnectionPoint.X, ConnectionPoint.Z);
-
-        List<Box> ObjectsList = new List<Box>();
-        List<Box> MarginsList = new List<Box>();
+            List<Box> ObjectsList = new List<Box>();
+            List<Box> MarginsList = new List<Box>();
 
 
-
+        */
 
         /*
             //var entranceList = new List<int>();
@@ -305,16 +320,16 @@ public class Script_Instance : GH_ScriptInstance
 
         ShowMatrix(areaArray);
 
-        Bxx = boxx;
+        //Bxx = boxx;
         A = areaArray;
         R = entranceBoxes;
-        G = personalSpaceBoxes;
+        G = commonBoxes;
         B = wetAreaBoxes;
-        Y = kitchenBoxes;
-        K = commonAreaBoxes;
+        /*Y = kitchenBoxes;
+        K = commonAreaBoxes;*/
         W = WhiteBoxes;
-        Furnitures = ObjectsList;
-        FurnituresMargins = MarginsList;
+        //Furnitures = ObjectsList;
+        //FurnituresMargins = MarginsList;
 
     }
 
@@ -581,7 +596,6 @@ public class Script_Instance : GH_ScriptInstance
         }
 
 
-
         static void mirror()
         {
 
@@ -634,25 +648,25 @@ public class Script_Instance : GH_ScriptInstance
 
     /* The Color lists keep the colors in a seperate List in order to choose within them easily instead of searching where they are... */
     static List<int> entranceList = new List<int>();
-    static List<int> personalSpaceList = new List<int>();
+    static List<int> commonList = new List<int>();
     static List<int> wetAreaList = new List<int>();
-    static List<int> kitchenList = new List<int>();
-    static List<int> commonAreaList = new List<int>();
+    /* static List<int> kitchenList = new List<int>();
+     static List<int> commonAreaList = new List<int>();*/
 
     /**           these counters are used for starting the límitations counts.         **/
 
     static int entranceCounter = 1;
-    static int personalSpaceCounter = 1;
+    static int commonCounter = 1;
     static int wetAreaCounter = 1;
-    static int kitchenCounter = 1;
-    static int commonAreaCounter = 1;
+    /*static int kitchenCounter = 1;
+    static int commonAreaCounter = 1;*/
     /**           these limits are used for defining max distance that zone can spread.  **/
 
     static int entranceLimit = 200;
-    static int personalSpaceLimit = 200;
+    static int commonLimit = 200;
     static int wetAreaLimit = 200;
-    static int kitchenLimit = 200;
-    static int commonAreaLimit = 100;
+    /*static int kitchenLimit = 200;
+    static int commonAreaLimit = 100;*/
 
     static void StartZones(int[,,] arr)
     {
@@ -678,8 +692,8 @@ public class Script_Instance : GH_ScriptInstance
         b = rand.Next(0, arr.GetLength(1));
         a = rand.Next(0, arr.GetLength(0));
 
-        personalSpaceList.AddRange(new int[2] { a, b });
-        arr[a, b, 0] = 2; // personalSpace Starting Point
+        commonList.AddRange(new int[2] { a, b });
+        arr[a, b, 0] = 2; // common Starting Point
                           //----------------------
         a = rand.Next(0, arr.GetLength(0));
         b = rand.Next(0, arr.GetLength(1));
@@ -689,16 +703,17 @@ public class Script_Instance : GH_ScriptInstance
                           //----------------------
         a = rand.Next(0, arr.GetLength(0));
         b = rand.Next(0, arr.GetLength(1));
+        /*
+            kitchenList.AddRange(new int[2] { a, b });
+            arr[a, b, 0] = 4; // kitchen Starting Point
+            //----------------------
+            a = rand.Next(0, arr.GetLength(0));
+            b = rand.Next(0, arr.GetLength(1));
 
-        kitchenList.AddRange(new int[2] { a, b });
-        arr[a, b, 0] = 4; // kitchen Starting Point
-                          //----------------------
-        a = rand.Next(0, arr.GetLength(0));
-        b = rand.Next(0, arr.GetLength(1));
-
-        commonAreaList.AddRange(new int[2] { a, b });
-        arr[a, b, 0] = 5; // commonArea Starting Point
-                          //----------------------
+            commonAreaList.AddRange(new int[2] { a, b });
+            arr[a, b, 0] = 5; // commonArea Starting Point
+            //----------------------
+          */
     }
     /* Calculates the distance between initial point in the color and the possible new point!
      *  (if the possible new point is too far from inital point eleminate it.) */
@@ -718,7 +733,6 @@ public class Script_Instance : GH_ScriptInstance
 
     static void noiseFilter(int[,,] arr, int type, int iterationNumber, int controlNumber)
     {
-
         if (type == 0)
         {
             for (int loop = 0; loop < iterationNumber; loop++)
@@ -739,7 +753,6 @@ public class Script_Instance : GH_ScriptInstance
                                 }
                             }
                         }
-
                         for (int v = 0; v < 6; v++) // 6 is the number of the zones including  empty cells
                         {
                             int count = (from z in surrounding where z == v select z).Count();
@@ -770,7 +783,6 @@ public class Script_Instance : GH_ScriptInstance
                             {
                                 if (!(x == y && x == 0) && ((x + y == 1) || (x + y == -1)))
                                 {
-
                                     surrounding.Add(arr[i + x, j + y, 0]);
                                 }
                             }
@@ -1159,11 +1171,6 @@ public class Script_Instance : GH_ScriptInstance
 
     }
 
-    public override void InvokeRunScript(IGH_Component owner, object rhinoDocument, int iteration, List<object> inputs, IGH_DataAccess DA)
-    {
-        throw new NotImplementedException();
-    }
-
 
 
 
@@ -1199,6 +1206,7 @@ public class Script_Instance : GH_ScriptInstance
 
     }
     */
+
 
 
     // </Custom additional code> 
