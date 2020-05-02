@@ -1,0 +1,7 @@
+C:\Users\msich_000\Documents\GitHub\DADS19-20_Group2\C# - Grasshopper\SpaceOrganizationConsoleVersion\obj\Debug\SpaceOrganizationConsoleVersion.csprojAssemblyReference.cache
+C:\Users\msich_000\Documents\GitHub\DADS19-20_Group2\C# - Grasshopper\SpaceOrganizationConsoleVersion\obj\Debug\SpaceOrganizationConsoleVersion.csproj.CoreCompileInputs.cache
+C:\Users\msich_000\Documents\GitHub\DADS19-20_Group2\C# - Grasshopper\SpaceOrganizationConsoleVersion\bin\Debug\SpaceOrganizationConsoleVersion.exe.config
+C:\Users\msich_000\Documents\GitHub\DADS19-20_Group2\C# - Grasshopper\SpaceOrganizationConsoleVersion\bin\Debug\SpaceOrganizationConsoleVersion.exe
+C:\Users\msich_000\Documents\GitHub\DADS19-20_Group2\C# - Grasshopper\SpaceOrganizationConsoleVersion\bin\Debug\SpaceOrganizationConsoleVersion.pdb
+C:\Users\msich_000\Documents\GitHub\DADS19-20_Group2\C# - Grasshopper\SpaceOrganizationConsoleVersion\obj\Debug\SpaceOrganizationConsoleVersion.exe
+C:\Users\msich_000\Documents\GitHub\DADS19-20_Group2\C# - Grasshopper\SpaceOrganizationConsoleVersion\obj\Debug\SpaceOrganizationConsoleVersion.pdb
