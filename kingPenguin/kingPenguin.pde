@@ -1,19 +1,19 @@
 // Digital Architectural Design Studio - Group 2
 // Space Organization Algorithm - kingPenguin
-// Version 17.1
+// Version 2.0
 
 
 
-int Xbol = 7; // Interior boundries of the module
-int Ybol = 14; // Each cell has 50*50 cm dimensions
+int Xbol = 6; // Interior boundries of the module
+int Ybol = 10; // Each cell has 60*60 cm dimensions
 
-int redBorder = 68; // Intended number of the cells
-int greenBorder = 10;
-int cyanBorder = 20;
+int redBorder = 40; // Intended number of the cells
+int greenBorder = 6;
+int cyanBorder = 14;
 //int blueBorder = 6;
 //int yellowBorder = 25;
 
-int tolerance = 4; // Negligible amount of missing - uncolored - cells
+int tolerance = 3; // Negligible amount of missing - uncolored - cells
 int cycleTime = 300;
 int loopCounter = 0;
 
@@ -38,6 +38,8 @@ objectClass chair;
 objectClass kitchenUnit;
 objectClass bed;
 objectClass monitor;
+objectClass toilet;
+objectClass showerCabin;
 
 
 int [][] matrix = new int[Xbol][Ybol]; 
@@ -48,11 +50,11 @@ void setup()
   size(400, 800);
   background(255);
 
-  red = new growCell("Living Space", 1, redSize, redBorder, 247, 207, 206);
-  green = new growCell("Wet Area", 2, greenSize, greenBorder, 215, 253, 209);
-  //blue = new growCell("Wet Area", 3, blueSize, blueBorder, 0, 0, 255);
-  //yellow = new growCell("Kitchen", 4, yellowSize, yellowBorder, 255, 255, 0);
-  cyan = new growCell("Entrance", 5, cyanSize, cyanBorder, 215, 253, 254);
+  red = new growCell("Living Space", 1, redSize, redBorder - 1, 247, 207, 206);
+  green = new growCell("Wet Area", 2, greenSize, greenBorder - 1, 215, 253, 209);
+  //blue = new growCell("Wet Area", 3, blueSize, blueBorder - 1, 0, 0, 255);
+  //yellow = new growCell("Kitchen", 4, yellowSize, yellowBorder - 1, 255, 255, 0);
+  cyan = new growCell("Entrance", 5, cyanSize, cyanBorder - 1, 215, 253, 254);
 
 
 
@@ -62,6 +64,10 @@ void setup()
   kitchenUnit = new objectClass("kitchen unit", 121, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
   bed = new objectClass("bed", 131, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 90, 100, 0);
   monitor = new objectClass("monitor", 141, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 100, 90);
+  toilet = new objectClass("toilet", 151, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 40, 10, 120);
+  showerCabin = new objectClass("shower cabin", 141, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 30, 60, 90);
+  
+  
   redSize = 0;
   greenSize = 0;
   cyanSize = 0;

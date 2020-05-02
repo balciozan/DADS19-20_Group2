@@ -228,7 +228,7 @@ class growCell
             int  randx = int(random(1, Xbol - 1));
             int  randy = int(random(1, Ybol - 1));
             //float dist = dist(randx, randy, 18, 1); 
-            float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 0.05; //dynamic center input
+            float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 1; //dynamic center input
             //float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 0.038 ; //static center input
 
             if (matrix[randx][randy] == colorValue && dist(randx, randy, centerX, centerY) < cellRange) { //dynamic center
