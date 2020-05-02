@@ -63,19 +63,20 @@ public class Script_Instance : GH_ScriptInstance
         List<Box> wetAreaBoxes = new List<Box>();
 
         /*List<Box> kitchenBoxes = new List<Box>();
-        List<Box> commonAreaBoxes = new List<Box>();*/
+          List<Box> commonAreaBoxes = new List<Box>();*/
 
         List<Box> WhiteBoxes = new List<Box>();
 
         /**  These sizes are Spreading Limits for the spaces   //total cells     **/
 
-        double entranceSize = (2 * 100 * 100) / (cellSize * cellSize);
-        double commonSize = (3 * 100 * 100) / (cellSize * cellSize);
-        double wetAreaSize = (1 * 100 * 100) / (cellSize * cellSize);
+        double entranceSize = (5 * 100 * 100) / (cellSize * cellSize);
+        double commonSize = (8 * 100 * 100) / (cellSize * cellSize);
+        double wetAreaSize = (3 * 100 * 100) / (cellSize * cellSize);
 
-        /*double kitchenSize = 7 * 100 * 100 / cellSize * cellSize;
+        /*
+        double kitchenSize = 7 * 100 * 100 / cellSize * cellSize;
         double commonAreaSize = 10 * 100 * 100 / cellSize * cellSize;
-      */
+        */
 
         Point3d pA = new Point3d(0, 0, 0);
         Point3d pB = new Point3d(10, 0, 0);
@@ -92,21 +93,21 @@ public class Script_Instance : GH_ScriptInstance
         int[,,] areaArray = InitializeZeroMatrice(length, width, levelNumber);
         StartZones(areaArray);
 
-        // int[,,] emptyFullArray = InitializeZeroMatrice(length, width, levelNumber);
+        int[,,] emptyFullArray = InitializeZeroMatrice(length, width, levelNumber);
 
         for (int i = 0; i < width * length * 3; i++)
         {
-            Rhino.RhinoApp.WriteLine("\n Loop Runs" + i.ToString());
+            //Rhino.RhinoApp.WriteLine("\n Loop Runs" + i.ToString());
 
             Spread(areaArray, ref entranceSize, entranceList, ref entranceCounter, entranceLimit, cellSize);
-            Rhino.RhinoApp.WriteLine("Entrance size" + entranceSize.ToString());
+            /*Rhino.RhinoApp.WriteLine("Entrance size" + entranceSize.ToString());
             Rhino.RhinoApp.WriteLine("Entrance counter" + entranceCounter.ToString());
-            Rhino.RhinoApp.WriteLine("\n ");
+            Rhino.RhinoApp.WriteLine("\n ");*/
 
 
             Spread(areaArray, ref commonSize, commonList, ref commonCounter, commonLimit, cellSize);
-            Rhino.RhinoApp.WriteLine("Common size" + commonSize.ToString());
-            Rhino.RhinoApp.WriteLine("Common counter" + commonCounter.ToString());
+            /*Rhino.RhinoApp.WriteLine("Common size" + commonSize.ToString());
+            Rhino.RhinoApp.WriteLine("Common counter" + commonCounter.ToString());*/
 
             Spread(areaArray, ref wetAreaSize, wetAreaList, ref wetAreaCounter, wetAreaLimit, cellSize);
 
@@ -127,18 +128,18 @@ public class Script_Instance : GH_ScriptInstance
                 }
             }
         }
-        /*
-            for (int k = 0;k < levelNumber;k++)
+
+        for (int k = 0; k < levelNumber; k++)
+        {
+            for (int i = 0; i < length; i++)
             {
-              for (int i = 0;i < length;i++)
-              {
-                for (int j = 0;j < width;j++)
+                for (int j = 0; j < width; j++)
                 {
-                  emptyFullArray[i, j, k] = 0;
+                    emptyFullArray[i, j, k] = 0;
                 }
-              }
             }
-        */
+        }
+
         entranceList.Clear();
         commonList.Clear();
         wetAreaList.Clear();
@@ -215,108 +216,94 @@ public class Script_Instance : GH_ScriptInstance
                 }
             }
         }
-        /*
-          var connectionPointO = new Objects
-            {
-              Name = "changeOverZone",
-              ZoneName = 2,
+        List<Box> ObjectsList = new List<Box>();
+        List<Box> MarginsList = new List<Box>();
 
-              Obj = ConnectionPoint,
-              ObjMargin = ConnectionPointMargin,
+        var connectionPointO = new Objects
+        {
+            Name = "ConectionPoint",
+            ZoneName = 1,
 
-              Front = true,
-              Right = true,
-              Back = false,
-              Left = false,
-              Top = false,
-              Bottom = false,
+            Obj = ConnectionPoint,
+            ObjMargin = ConnectionPointMargin,
 
-              RotationBool = false,
-              RotationOpt = 2,
+            Front = true,
+            Right = true,
+            Back = false,
+            Left = false,
+            Top = false,
+            Bottom = false,
 
-              MirrorBool = false,
-              MirrorOpt = 2,
+            RotationBool = false,
+            RotationOpt = 2,
 
-              Source = "NULL",
-              FixedToWall = 1,
+            MirrorBool = false,
+            MirrorOpt = 2,
 
-              CellSize = 60,
-              SpaceList = entranceList,
+            Source = "NULL",
+            FixedToWall = 1,
 
-              //PreviousObject = changeOverZoneO
+            CellSize = 60,
+            SpaceList = entranceList,
 
-              };
+            //PreviousObject = changeOverZoneO
 
-          var changeOverZoneO = new Objects
-            {
-              Name = "changeOverZone",
-              ZoneName = 2,
-
-              Obj = ChangeOverZone,
-              ObjMargin = ChangeOverZoneMargin,
-
-              Front = true,
-              Right = true,
-              Back = false,
-              Left = false,
-              Top = false,
-              Bottom = false,
-
-              RotationBool = false,
-              RotationOpt = 2,
-
-              MirrorBool = false,
-              MirrorOpt = 2,
-
-              Source = "NULL",
-              FixedToWall = 1,
-              CellSize = 60,
-
-              PreviousObject = connectionPointO,
-              SpaceList = entranceList,
-
-              };
-
-          connectionPointO.placeRefObject();
-      */
-        /*
-            var randd = new Random();
-            //var entranceList = new List<int>();
-            //entranceList.Add(3);entranceList.Add(4);
-            Rhino.RhinoApp.WriteLine(entranceList.Count().ToString());
-            var randomIndex = randd.Next(entranceList.Count / 2);
-            int a = entranceList[2 * randomIndex];
-            int b = entranceList[2 * randomIndex + 1];
-
-            Point3d pointa = new Point3d(0 * cellSize, b * cellSize, 0);
-            Vector3d pointb = new Vector3d(0, 0, 1);
-
-            Plane planebase = new Plane(pointa, pointb);
-
-            Box boxx = new Box(planebase, ConnectionPoint.Y, ConnectionPoint.X, ConnectionPoint.Z);
-
-            List<Box> ObjectsList = new List<Box>();
-            List<Box> MarginsList = new List<Box>();
+        };
+        connectionPointO.assignDimensions();
+        ObjectsList.Add(connectionPointO.placeRefObject());
 
 
-        */
+        connectionPointO.printDimensions();
 
-        /*
-            //var entranceList = new List<int>();
-            //entranceList.Add(3);entranceList.Add(4);
-            Rhino.RhinoApp.WriteLine(wetAreaList.Count().ToString());
-            var randomIndex = randd.Next(wetAreaList.Count / 2);
-            int a = entranceList[2 * randomIndex];
-            int b = entranceList[2 * randomIndex + 1];
+        var changeOverZoneO = new Objects
+        {
+            Name = "changeOverZone",
+            ZoneName = 1,
 
-            Point3d pointa = new Point3d(0 * cellSize, b * cellSize, 0);
-            Vector3d pointb = new Vector3d(0, 0, 1);
+            Obj = ChangeOverZone,
+            ObjMargin = ChangeOverZoneMargin,
 
-            Plane planebase = new Plane(pointa, pointb);
+            Front = true,
+            Right = true,
+            Back = false,
+            Left = false,
+            Top = false,
+            Bottom = false,
+
+            RotationBool = false,
+            RotationOpt = 2,
+
+            MirrorBool = false,
+            MirrorOpt = 2,
+
+            Source = "NULL",
+            FixedToWall = 1,
+            CellSize = 60,
+
+            PreviousObject = connectionPointO,
+            SpaceList = entranceList,
+
+        };
+
+        changeOverZoneO.assignDimensions();
+
+        changeOverZoneO.printDimensions();
+        Point3d pointa = new Point3d(0, 0, 0);
+        Vector3d vectorb = new Vector3d(0, 0, 1);
+
+        Plane planebase = new Plane(pointa, vectorb);
+
+        Interval xInter = new Interval(0, 10);
+        Interval yInter = new Interval(0, 10);
+        Interval zInter = new Interval(0, 10);
 
 
-            Box boxx = new Box(planebase, ChangeOverZone.Y, ChangeOverZone.X, ChangeOverZone.Z);
-            */
+        Box ObjBox = new Box(planebase, yInter, xInter, zInter);
+        Box marginBox = new Box(planebase, yInter, xInter, zInter);
+
+        changeOverZoneO.placeFront(emptyFullArray, areaArray, out ObjBox, out marginBox);
+        changeOverZoneO.printDimensions();
+        ObjectsList.Add(ObjBox);
 
         ShowMatrix(areaArray);
 
@@ -328,8 +315,8 @@ public class Script_Instance : GH_ScriptInstance
         /*Y = kitchenBoxes;
         K = commonAreaBoxes;*/
         W = WhiteBoxes;
-        //Furnitures = ObjectsList;
-        //FurnituresMargins = MarginsList;
+        Furnitures = ObjectsList;
+        FurnituresMargins = MarginsList;
 
     }
 
@@ -362,13 +349,13 @@ public class Script_Instance : GH_ScriptInstance
 
         public Objects PreviousObject;
 
-        int ObjLength;
-        int ObjWidth;
-        int ObjHeight;
+        public double ObjLength;
+        public double ObjWidth;
+        public double ObjHeight;
 
-        int MrjLength;
-        int MrjWidth;
-        int MrjHeight;
+        public double MrjLength;
+        public double MrjWidth;
+        public double MrjHeight;
 
         public double baseX, baseY, baseZ;
         public List<int> SpaceList = new List<int>();
@@ -411,17 +398,17 @@ public class Script_Instance : GH_ScriptInstance
             this.FixedToWall = fixedTowall;
             this.CellSize = cellSize;
 
-            ObjWidth = (int)(Obj.X.Length);
-            ObjLength = (int)(Obj.Y.Length);
-            ObjHeight = (int)(Obj.Z.Length);
+            this.ObjWidth = obj.X.T1;
+            this.ObjLength = obj.Y.T1;
+            this.ObjHeight = obj.Z.T1;
 
-            MrjWidth = (int)(ObjMargin.X.Length);
-            MrjLength = (int)(ObjMargin.Y.Length);
-            MrjHeight = (int)(ObjMargin.Z.Length);
+            this.MrjWidth = objMargin.X.T1;
+            this.MrjLength = objMargin.Y.T1;
+            this.MrjHeight = objMargin.Z.T1;
 
-            baseX = Obj.Plane.OriginX;
-            baseY = Obj.Plane.OriginY;
-            baseZ = Obj.Plane.OriginZ;
+            this.baseX = Obj.Plane.OriginX;
+            this.baseY = Obj.Plane.OriginY;
+            this.baseZ = Obj.Plane.OriginZ;
 
             this.PreviousObject = previousObject;
             this.SpaceList = spaceList;
@@ -454,23 +441,23 @@ public class Script_Instance : GH_ScriptInstance
             this.FixedToWall = fixedTowall;
             this.CellSize = cellSize;
 
-            ObjWidth = (int)(Obj.X.Length);
-            ObjLength = (int)(Obj.Y.Length);
-            ObjHeight = (int)(Obj.Z.Length);
+            this.ObjWidth = obj.X.T1;
+            this.ObjLength = obj.Y.T1;
+            this.ObjHeight = obj.Z.T1;
 
-            MrjWidth = (int)(ObjMargin.X.Length);
-            MrjLength = (int)(ObjMargin.Y.Length);
-            MrjHeight = (int)(ObjMargin.Z.Length);
+            this.MrjWidth = (this.ObjMargin.X.T1);
+            this.MrjLength = (this.ObjMargin.Y.T1);
+            this.MrjHeight = (this.ObjMargin.Z.T1);
 
-            baseX = Obj.Plane.OriginX;
-            baseY = Obj.Plane.OriginY;
-            baseZ = Obj.Plane.OriginZ;
+            this.baseX = Obj.Plane.OriginX;
+            this.baseY = Obj.Plane.OriginY;
+            this.baseZ = Obj.Plane.OriginZ;
 
             this.SpaceList = spaceList;
 
         }
 
-        public void placeFront(int[,,] emptyFullArray, int[,,] areaArray)
+        public void placeFront(int[,,] emptyFullArray, int[,,] areaArray, out Box ObjBox, out Box marginBox)
         { /*
       this.baseX = PreviousObject.baseX + PreviousObject.MrjLength;
       this.baseY = PreviousObject.baseY;
@@ -481,13 +468,13 @@ public class Script_Instance : GH_ScriptInstance
 
             double XCell = Math.Ceiling((double)(this.MrjWidth / CellSize));
             double YCell = Math.Ceiling((double)(this.MrjLength / CellSize));
-            double ZCell = Math.Ceiling((double)(this.MrjHeight / CellSize));
+            double ZCell = Math.Ceiling((double)(this.MrjHeight / 150));
 
             for (int i = (int)(PreviousObject.baseX / CellSize); i < PreviousObject.baseX / CellSize + (int)XCell; i++)
             {
                 for (int j = (int)(PreviousObject.baseY / CellSize); j < PreviousObject.baseY / CellSize + (int)YCell; j++)
                 {
-                    for (int k = (int)(PreviousObject.baseZ / CellSize); k < PreviousObject.baseZ / CellSize + (int)ZCell; k++)
+                    for (int k = (int)(PreviousObject.baseZ / 150); k < PreviousObject.baseZ / 150 + (int)ZCell; k++)
                     {
                         if (emptyFullArray[i, j, k] == 1)
                         {
@@ -497,7 +484,6 @@ public class Script_Instance : GH_ScriptInstance
                         {
                             sameZone = false;
                         }
-
                     }
                 }
             }
@@ -509,18 +495,112 @@ public class Script_Instance : GH_ScriptInstance
                 this.baseZ = PreviousObject.baseZ;
             }
 
-            for (int i = 0; i < XCell; i++)
+            for (int i = (int)(PreviousObject.baseX / CellSize); i < PreviousObject.baseX / CellSize + (int)XCell; i++)
             {
-                for (int j = 0; j < YCell; j++)
+                for (int j = (int)(PreviousObject.baseY / CellSize); j < PreviousObject.baseY / CellSize + (int)YCell; j++)
                 {
-                    for (int k = 0; k < ZCell; k++)
+                    for (int k = (int)(PreviousObject.baseZ / 150); k < PreviousObject.baseZ / 150 + (int)ZCell; k++)
                     {
                         emptyFullArray[i, j, k] = 1;
                     }
                 }
             }
 
+            Point3d pointa = new Point3d(baseX * CellSize, baseY * CellSize, baseZ * CellSize);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+
+            Plane planebase = new Plane(pointa, pointb);
+
+            Interval xInterval = new Interval(this.baseX * this.CellSize, this.ObjWidth);
+            Interval yInterval = new Interval(this.baseY * this.CellSize, this.ObjLength);
+            Interval zInterval = new Interval(this.baseZ * 150, this.ObjHeight);
+
+            ObjBox = new Box(planebase, yInterval, xInterval, zInterval);
+
+            xInterval = new Interval(this.baseX * this.CellSize, this.MrjWidth);
+            yInterval = new Interval(this.baseY * this.CellSize, this.MrjLength);
+            zInterval = new Interval(this.baseZ * 150, this.MrjHeight);
+
+            marginBox = new Box(planebase, yInterval, xInterval, zInterval);
+
         }
+
+
+
+        public Box placeRefObject()
+        {
+
+            var rand = new Random();
+            var randomCellIndex = rand.Next(this.SpaceList.Count / 2);
+
+            baseX = SpaceList[2 * randomCellIndex];
+            baseY = SpaceList[2 * randomCellIndex + 1];
+            baseZ = 0;
+
+            Point3d pointa = new Point3d(0 * CellSize, baseY * CellSize, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+
+            Plane planebase = new Plane(pointa, pointb);
+
+            Interval xInterval = new Interval(baseX * CellSize, this.ObjWidth);
+            Interval yInterval = new Interval(baseY * CellSize, this.ObjLength);
+            Interval zInterval = new Interval(baseZ, this.ObjHeight);
+
+
+            Rhino.RhinoApp.WriteLine("ref object hehight " + this.ObjHeight);
+
+            Box boxx = new Box(planebase, yInterval, xInterval, zInterval);
+            return boxx;
+
+            /*
+          //var entranceList = new List<int>();
+          //entranceList.Add(3);entranceList.Add(4);
+
+          Rhino.RhinoApp.WriteLine(wetAreaList.Count().ToString());
+          var randomIndex = randd.Next(wetAreaList.Count / 2);
+
+          int a = entranceList[2 * randomIndex];
+          int b = entranceList[2 * randomIndex + 1];
+
+          Point3d pointa = new Point3d(0 * cellSize, b * cellSize, 0);
+          Vector3d pointb = new Vector3d(0, 0, 1);
+
+          Plane planebase = new Plane(pointa, pointb);
+
+
+          Box boxx = new Box(planebase, ChangeOverZone.Y, ChangeOverZone.X, ChangeOverZone.Z);
+          */
+
+
+        }
+
+        public void assignDimensions()
+        {
+            ObjWidth = this.Obj.X.T1;
+            ObjLength = this.Obj.Y.T1;
+            ObjHeight = this.Obj.Z.T1;
+
+            this.MrjWidth = this.ObjMargin.X.T1;
+            this.MrjLength = this.ObjMargin.Y.T1;
+            this.MrjHeight = this.ObjMargin.Z.T1;
+
+        }
+        public void printDimensions()
+        {
+
+            Rhino.RhinoApp.WriteLine("Obj Width " + this.ObjWidth.ToString());
+            Rhino.RhinoApp.WriteLine("Obj Length " + this.ObjLength.ToString());
+            Rhino.RhinoApp.WriteLine("Obj Height " + this.ObjHeight.ToString());
+
+
+            Rhino.RhinoApp.WriteLine("Obj Width " + this.MrjWidth.ToString());
+            Rhino.RhinoApp.WriteLine("Obj Length " + this.MrjLength.ToString());
+            Rhino.RhinoApp.WriteLine("Obj Height " + this.MrjHeight.ToString());
+
+
+        }
+
+
 
         public void placeRight()
         {
@@ -559,36 +639,9 @@ public class Script_Instance : GH_ScriptInstance
             this.baseZ = PreviousObject.baseZ - this.MrjHeight;
         }
 
-        public void placeObject()
-        {
-            if (RotationBool == false)
-            {
-
-            }
-        }
 
 
-        public Box placeRefObject()
-        {
-            var rand = new Random();
-            var randomCellIndex = rand.Next(this.SpaceList.Count / 2);
 
-            baseX = SpaceList[2 * randomCellIndex];
-            baseY = SpaceList[2 * randomCellIndex + 1];
-            baseZ = 0;
-
-            Point3d pointa = new Point3d(baseX * CellSize, baseY * CellSize, 0);
-            Vector3d pointb = new Vector3d(0, 0, 1);
-
-            Plane planebase = new Plane(pointa, pointb);
-
-            Interval xInterval = new Interval(baseX * CellSize, ObjWidth);
-            Interval yInterval = new Interval(baseY * CellSize, ObjLength);
-            Interval zInterval = new Interval(baseZ, ObjHeight);
-
-            Box boxx = new Box(planebase, yInterval, xInterval, zInterval);
-            return boxx;
-        }
 
         static void rotate()
         {
