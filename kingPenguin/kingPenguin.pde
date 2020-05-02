@@ -46,7 +46,7 @@ int [][] matrix = new int[Xbol][Ybol];
 
 void setup()
 {
-  frameRate(20);
+  frameRate(500);
   size(400, 800);
   background(255);
 
@@ -92,12 +92,12 @@ Below, one cell for each color - which represents different spaces - are created
    int value to make further calculations.
    */
 
-  matrix[3][1] = 5; // Only the first cyan - entrance - cell is not random since the entrance is fixed.
-  if (matrix[3][1]== 5)
+  matrix[3][0] = 5; // Only the first cyan - entrance - cell is not random since the entrance is fixed.
+  if (matrix[3][0]== 5)
   {
     fill(215, 253, 254);
     noStroke();
-    rect((width/Xbol)*3, (height/Ybol), (width/Xbol), (height/Ybol));
+    rect((width/Xbol)*3, (height/Ybol)*0, (width/Xbol), (height/Ybol));
   }
 
   red.firstCell();

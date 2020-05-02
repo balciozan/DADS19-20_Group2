@@ -252,7 +252,7 @@ class objectClass
           }
           success2++;
           success1++;
-        } else if (whilecnt2 >= 10000) {
+        } else if (whilecnt2 >= 1000) {
           success2++;
         }
       }

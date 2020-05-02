@@ -61,6 +61,8 @@ void growFilter() {
     }
   }
   
+
+/*  
   for (int j=1; j<Ybol-1; j++)
   {
     for (int i=1; i<Xbol-1; i++)
@@ -72,7 +74,6 @@ void growFilter() {
       int filter3 = 0;
       int filter4 = 0;
       int filter5 = 0;
-
 
       for (int k = newi - 1; k < newi + 2; k++) {
         for (int l = newj - 1; l < newj + 2; l++) {
@@ -121,4 +122,5 @@ void growFilter() {
       }
     }
   }
+  */
 }

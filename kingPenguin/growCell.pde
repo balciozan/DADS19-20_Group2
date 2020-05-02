@@ -147,9 +147,9 @@ class growCell
     int newi = 0;
     int newj = 0;
 
-    for (int j=1; j<Ybol; j++)
+    for (int j=0; j<Ybol; j++)
     {
-      for (int i=1; i<Xbol; i++)
+      for (int i=0; i<Xbol; i++)
       {
         if (matrix[i][j]== colorValue)
         {
