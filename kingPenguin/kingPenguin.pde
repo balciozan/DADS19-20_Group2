@@ -46,7 +46,7 @@ int [][] matrix = new int[Xbol][Ybol];
 
 void setup()
 {
-  frameRate(5000);
+  frameRate(20);
   size(400, 800);
   background(255);
 

@@ -41,7 +41,7 @@ class growCell
     int successFirst = 0;
 
     while ( successFirst == 0) {
-      m = int(random(0, Xbol - 1));
+      m = int(random(1, 5));
       if (m == 1) {
         k = 0;
         l = int(random(0, Ybol-1));
@@ -51,9 +51,9 @@ class growCell
           matrix[k][l] = colorValue;
 
 
-          for (int j=1; j<Ybol; j++)
+          for (int j=0; j<Ybol; j++)
           {
-            for (int i=1; i<Xbol; i++)
+            for (int i=0; i<Xbol; i++)
             {
               if (matrix[i][j]== colorValue)
               {
@@ -75,9 +75,9 @@ class growCell
           matrix[k][l] = colorValue;
 
 
-          for (int j=1; j<Ybol; j++)
+          for (int j=0; j<Ybol; j++)
           {
-            for (int i=1; i<Xbol; i++)
+            for (int i=0; i<Xbol; i++)
             {
               if (matrix[i][j]== colorValue)
               {
@@ -99,9 +99,9 @@ class growCell
           matrix[k][l] = colorValue;
 
 
-          for (int j=1; j<Ybol; j++)
+          for (int j=0; j<Ybol; j++)
           {
-            for (int i=1; i<Xbol; i++)
+            for (int i=0; i<Xbol; i++)
             {
               if (matrix[i][j]== colorValue)
               {
@@ -123,9 +123,9 @@ class growCell
           matrix[k][l] = colorValue;
 
 
-          for (int j=1; j<Ybol; j++)
+          for (int j=0; j<Ybol; j++)
           {
-            for (int i=1; i<Xbol; i++)
+            for (int i=0; i<Xbol; i++)
             {
               if (matrix[i][j]== colorValue)
               {
@@ -318,7 +318,7 @@ void cornerCell() {     NO LONGER NEEDED
             newj = j-1;
           }
 
-          if ((matrix[newi][newj] == 0) && (newj <= Ybol) && (newj >= 0) && (newi <= Xbol) && (newi >= 0)) {
+          if ((matrix[newi][newj] == 0) && (newj < Ybol) && (newj >= 0) && (newi < Xbol) && (newi >= 0)) {
             success2 = 1;
             success3 = 1;
             colorSize++;
