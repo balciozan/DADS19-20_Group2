@@ -99,6 +99,7 @@ class objectClass
     listY = new IntList();
     listX.clear();
     listY.clear();
+    dist = 0;
 
     for (int j=0; j< Ybol; j++)
     {
