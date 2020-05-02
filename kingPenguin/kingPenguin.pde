@@ -13,7 +13,7 @@ int cyanBorder = 14;
 //int blueBorder = 6;
 //int yellowBorder = 25;
 
-int tolerance = 3; // Negligible amount of missing - uncolored - cells
+int tolerance = 0; // Negligible amount of missing - uncolored - cells
 int cycleTime = 300;
 int loopCounter = 0;
 

@@ -173,8 +173,8 @@ class growCell
     textSize(16);
     textAlign(CENTER);
     fill(1);
-    text(colorName, centerX*(400/7), centerY*(400/7));
-    text((float)colorSize/4 + " sqm", centerX*(400/7), (centerY*(400/7)) + 18);
+    text(colorName, (centerX)*(width/Xbol), (centerY)*(height/Ybol));
+    text((float)colorSize*0.36 + " sqm", (centerX)*(width/Xbol), ((centerY)*(height/Ybol)) + 18);
   }
 
 
@@ -185,24 +185,28 @@ class growCell
       fill(colorR, colorG, colorB);
       noStroke();
       rect((0), (0), (width/Xbol), (height/Ybol));
+      colorSize++;
     }
     if (matrix[0][Ybol-1] == 0 && matrix[1][Ybol-1] == colorValue && matrix[0][Ybol-2] == colorValue) {
       matrix[0][Ybol-1] = colorValue;
       fill(colorR, colorG, colorB);
       noStroke();
       rect((0), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
+      colorSize++;
     }
     if (matrix[Xbol-1][0] == 0 && matrix[Xbol-1][1] == colorValue && matrix[Xbol-2][0] == colorValue) {
       matrix[Xbol-1][0] = colorValue;
       fill(colorR, colorG, colorB);
       noStroke();
       rect((width/Xbol)*(Xbol-1), (0), (width/Xbol), (height/Ybol));
+      colorSize++;
     }
     if (matrix[Xbol-1][Ybol-1] == 0 && matrix[Xbol-2][Ybol-1] == colorValue && matrix[Xbol-1][Ybol-2] == colorValue) {
       matrix[Xbol-1][Ybol-1] = colorValue;
       fill(colorR, colorG, colorB);
       noStroke();
       rect((width/Xbol)*(Xbol-1), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
+      colorSize++;
     }
   }
 
