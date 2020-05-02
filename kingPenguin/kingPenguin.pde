@@ -37,6 +37,7 @@ objectClass table;
 objectClass chair;
 objectClass kitchenUnit;
 objectClass bed;
+objectClass monitor;
 
 
 int [][] matrix = new int[Xbol][Ybol]; 
@@ -59,7 +60,8 @@ void setup()
   table = new objectClass("table", 101, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100);
   chair = new objectClass("chair", 111, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 90, 200, 90);
   kitchenUnit = new objectClass("kitchen unit", 121, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
-  bed = new objectClass("bed1", 131, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 90, 100, 0);
+  bed = new objectClass("bed", 131, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 90, 100, 0);
+  monitor = new objectClass("monitor", 141, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 100, 90);
   redSize = 0;
   greenSize = 0;
   cyanSize = 0;

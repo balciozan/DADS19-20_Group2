@@ -5,6 +5,7 @@ void objects() {
     chair.placeObject(101, 2, 0);
     kitchenUnit.referenceObject();
     bed.referenceObject();
+    monitor.referenceObject();
 
     saveFrame("Results/alternative-##.png");
     setup();
