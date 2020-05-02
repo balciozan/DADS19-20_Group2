@@ -37,10 +37,10 @@ void growControl() {
     if (counterGrow <= control) {
       //growFilter();
       red.spaceNaming();
-      //yellow.spaceNaming();
+      //yellow.spaceNaming(); No longer needed
       green.spaceNaming();
       cyan.spaceNaming();
-      //blue.spaceNaming();
+      //blue.spaceNaming(); No longer needed
 
       objectTrigger++;
     }

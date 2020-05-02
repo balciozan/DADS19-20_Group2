@@ -2,15 +2,11 @@ void grow() {
 
   red.growing();
   green.growing();
-  //blue.growing();
-  //yellow.growing();
+  //blue.growing(); No longer needed
+  //yellow.growing(); No longer needed
   cyan.growing();
 
-  red.cornerCell();
-  green.cornerCell();
-  //blue.cornerCell();
-  //yellow.cornerCell();
-  cyan.cornerCell();
+
 
   growControl();
 }

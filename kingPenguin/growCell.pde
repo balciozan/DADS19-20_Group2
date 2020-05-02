@@ -22,6 +22,7 @@ class growCell
   int l;
   int m;
 
+  IntList listPos;
 
 
 
@@ -39,12 +40,11 @@ class growCell
   void firstCell() {
     int successFirst = 0;
 
-
     while ( successFirst == 0) {
-      m = int(random(1, 5));
+      m = int(random(0, Xbol - 1));
       if (m == 1) {
-        k = 1;
-        l = int(random(1, Ybol-1));
+        k = 0;
+        l = int(random(0, Ybol-1));
 
         if (matrix[k][l] == 0) {
 
@@ -67,8 +67,8 @@ class growCell
           }
         }
       } else if (m == 2) {
-        k = Xbol-2;
-        l = int(random(1, Ybol-1));
+        k = Xbol-1;
+        l = int(random(0, Ybol-1));
 
         if (matrix[k][l] == 0) {
 
@@ -91,8 +91,8 @@ class growCell
           }
         }
       } else if (m == 3) {
-        k = int(random(1, Xbol-1));
-        l = 1;
+        k = int(random(0, Xbol-1));
+        l = 0;
 
         if (matrix[k][l] == 0) {
 
@@ -115,8 +115,8 @@ class growCell
           }
         }
       } else if (m == 4) {
-        k = int(random(1, Xbol-1));
-        l = Ybol-2;
+        k = int(random(0, Xbol-1));
+        l = Ybol-1;
 
         if (matrix[k][l] == 0) {
 
@@ -178,38 +178,39 @@ class growCell
   }
 
 
-  void cornerCell() {
-
-    if (matrix[0][0] == 0 && matrix[1][0] == colorValue && matrix[0][1] == colorValue) {
-      matrix[0][0] = colorValue;
-      fill(colorR, colorG, colorB);
-      noStroke();
-      rect((0), (0), (width/Xbol), (height/Ybol));
-      colorSize++;
-    }
-    if (matrix[0][Ybol-1] == 0 && matrix[1][Ybol-1] == colorValue && matrix[0][Ybol-2] == colorValue) {
-      matrix[0][Ybol-1] = colorValue;
-      fill(colorR, colorG, colorB);
-      noStroke();
-      rect((0), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
-      colorSize++;
-    }
-    if (matrix[Xbol-1][0] == 0 && matrix[Xbol-1][1] == colorValue && matrix[Xbol-2][0] == colorValue) {
-      matrix[Xbol-1][0] = colorValue;
-      fill(colorR, colorG, colorB);
-      noStroke();
-      rect((width/Xbol)*(Xbol-1), (0), (width/Xbol), (height/Ybol));
-      colorSize++;
-    }
-    if (matrix[Xbol-1][Ybol-1] == 0 && matrix[Xbol-2][Ybol-1] == colorValue && matrix[Xbol-1][Ybol-2] == colorValue) {
-      matrix[Xbol-1][Ybol-1] = colorValue;
-      fill(colorR, colorG, colorB);
-      noStroke();
-      rect((width/Xbol)*(Xbol-1), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
-      colorSize++;
-    }
-  }
-
+  /*
+void cornerCell() {     NO LONGER NEEDED
+   
+   if (matrix[0][0] == 0 && matrix[1][0] == colorValue && matrix[0][1] == colorValue) {
+   matrix[0][0] = colorValue;
+   fill(colorR, colorG, colorB);
+   noStroke();
+   rect((0), (0), (width/Xbol), (height/Ybol));
+   colorSize++;
+   }
+   if (matrix[0][Ybol-1] == 0 && matrix[1][Ybol-1] == colorValue && matrix[0][Ybol-2] == colorValue) {
+   matrix[0][Ybol-1] = colorValue;
+   fill(colorR, colorG, colorB);
+   noStroke();
+   rect((0), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
+   colorSize++;
+   }
+   if (matrix[Xbol-1][0] == 0 && matrix[Xbol-1][1] == colorValue && matrix[Xbol-2][0] == colorValue) {
+   matrix[Xbol-1][0] = colorValue;
+   fill(colorR, colorG, colorB);
+   noStroke();
+   rect((width/Xbol)*(Xbol-1), (0), (width/Xbol), (height/Ybol));
+   colorSize++;
+   }
+   if (matrix[Xbol-1][Ybol-1] == 0 && matrix[Xbol-2][Ybol-1] == colorValue && matrix[Xbol-1][Ybol-2] == colorValue) {
+   matrix[Xbol-1][Ybol-1] = colorValue;
+   fill(colorR, colorG, colorB);
+   noStroke();
+   rect((width/Xbol)*(Xbol-1), (height/Ybol)*(Ybol-1), (width/Xbol), (height/Ybol));
+   colorSize++;
+   }
+   }
+   */
 
   void growing() {
     int whilecnt = 0;
@@ -229,14 +230,14 @@ class growCell
           int success = 0;
           while (success == 0) { //Checks cells randomly if it is red or not. When it finds the red cell, loop ends and function proceeds.
 
-            int  randx = int(random(1, Xbol - 1));
-            int  randy = int(random(1, Ybol - 1));
+            int  randx = int(random(0, Xbol));
+            int  randy = int(random(0, Ybol));
             //float dist = dist(randx, randy, 18, 1); 
             float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 1; //dynamic center input
             //float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 0.038 ; //static center input
 
             if (matrix[randx][randy] == colorValue && dist(randx, randy, centerX, centerY) < cellRange) { //dynamic center
-            //if (matrix[randx][randy] == colorValue && dist(randx, randy, k, l) < cellRange) { //static center
+              //if (matrix[randx][randy] == colorValue && dist(randx, randy, k, l) < cellRange) { //static center
 
               i = randx;
               j = randy;
@@ -247,23 +248,76 @@ class growCell
           int newi = i;
           int newj = j;
 
-          float axis = random(-1, 1);
 
-          if (axis > 0) {
-            float axisX = random(-1, 1);
-            if (axisX > 0) {
-              newi = i+1;
-            } else if (axisX <= 0) {
-              newi = i-1;
-            }
-          } else if (axis <= 0) {
-            float axisY = random(-1, 1);
-            if (axisY > 0) {
-              newj = j+1;
-            } else if (axisY <= 0) {
-              newj = j-1;
-            }
+          int randOpt = 0;
+          int zoneOpt = 0;
+          listPos = new IntList();
+          listPos.clear();
+
+          if (i == 0 && j == 0) {  // Left upper corner -- add only to right and down
+            listPos.append(2);
+            listPos.append(3);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else if (j == 0 && i != 0 && i != Xbol - 1) {  // Upper boundry -- add only to right, down and left
+            listPos.append(2);
+            listPos.append(3);
+            listPos.append(4);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else if (i == Xbol - 1 && j == 0) {  // Right upper corner -- add only to down and left
+            listPos.append(3);
+            listPos.append(4);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else if (i == Xbol - 1 && j != 0 && j != Ybol-1) {  // Right boundry -- add only to down, left and up
+            listPos.append(1);
+            listPos.append(3);
+            listPos.append(4);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else if (i == Xbol - 1 && j == Ybol-1) {  // Right down corner -- add only to left and up
+            listPos.append(1);
+            listPos.append(4);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else if (j == Ybol - 1 && i != 0 && i != Xbol - 1) {  // Down boundry -- add only to left, up and right
+            listPos.append(1);
+            listPos.append(2);
+            listPos.append(4);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else if (i == 0 && j == Ybol - 1) {  // Left down corner -- add only to up and right
+            listPos.append(1);
+            listPos.append(2);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else if (i == 0 && j != 0 && j != Ybol - 1) {  // Left boundry -- add only to up, right and down
+            listPos.append(1);
+            listPos.append(2);
+            listPos.append(3);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
+          } else {
+            listPos.append(1);
+            listPos.append(2);
+            listPos.append(3);
+            listPos.append(4);
+            randOpt = int(random(0, listPos.size()));
+            zoneOpt = listPos.get(randOpt);
           }
+
+
+          if (zoneOpt == 2) {
+            newi = i+1;
+          } else if (zoneOpt == 4) {
+            newi = i-1;
+          } else if (zoneOpt == 3) {
+            newj = j+1;
+          } else if (zoneOpt == 1) {
+            newj = j-1;
+          }
+
           if ((matrix[newi][newj] == 0) && (newj <= Ybol) && (newj >= 0) && (newi <= Xbol) && (newi >= 0)) {
             success2 = 1;
             success3 = 1;

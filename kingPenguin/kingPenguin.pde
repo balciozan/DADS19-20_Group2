@@ -10,8 +10,8 @@ int Ybol = 10; // Each cell has 60*60 cm dimensions
 int redBorder = 40; // Intended number of the cells
 int greenBorder = 6;
 int cyanBorder = 14;
-//int blueBorder = 6;
-//int yellowBorder = 25;
+//int blueBorder = 6; No longer needed
+//int yellowBorder = 25; No longer needed
 
 int tolerance = 0; // Negligible amount of missing - uncolored - cells
 int cycleTime = 300;
@@ -21,8 +21,8 @@ int loopCounter = 0;
 int redSize = 0; // Momentarily number of the cells
 int greenSize = 0;
 int cyanSize = 0;
-//int blueSize = 0;
-//int yellowSize = 0;
+//int blueSize = 0; No longer needed
+//int yellowSize = 0; No longer needed
 
 int objectTrigger = 0;
 
@@ -30,8 +30,8 @@ int objectTrigger = 0;
 growCell red;
 growCell green;
 growCell cyan;
-//growCell blue;
-//growCell yellow; 
+//growCell blue; No longer needed
+//growCell yellow; No longer needed
 
 objectClass table;
 objectClass chair;
@@ -52,8 +52,8 @@ void setup()
 
   red = new growCell("Living Space", 1, redSize, redBorder - 1, 247, 207, 206);
   green = new growCell("Wet Area", 2, greenSize, greenBorder - 1, 215, 253, 209);
-  //blue = new growCell("Wet Area", 3, blueSize, blueBorder - 1, 0, 0, 255);
-  //yellow = new growCell("Kitchen", 4, yellowSize, yellowBorder - 1, 255, 255, 0);
+  //blue = new growCell("Wet Area", 3, blueSize, blueBorder - 1, 0, 0, 255); No longer needed
+  //yellow = new growCell("Kitchen", 4, yellowSize, yellowBorder - 1, 255, 255, 0); No longer needed
   cyan = new growCell("Entrance", 5, cyanSize, cyanBorder - 1, 215, 253, 254);
 
 
@@ -71,8 +71,8 @@ void setup()
   redSize = 0;
   greenSize = 0;
   cyanSize = 0;
-  //blueSize = 0;
-  //yellowSize = 0;
+  //blueSize = 0; No longer needed
+  //yellowSize = 0; No longer needed
   loopCounter = 0;
   objectTrigger = 0;
 
@@ -101,9 +101,9 @@ Below, one cell for each color - which represents different spaces - are created
   }
 
   red.firstCell();
-  //blue.firstCell();
+  //blue.firstCell(); No longer needed
   green.firstCell();
-  //yellow.firstCell();
+  //yellow.firstCell(); No longer needed
 }
 
 
