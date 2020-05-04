@@ -18,6 +18,9 @@ class objectClass
   int objectMarRear;
   int objectSource;
   int objectFixed;
+  
+  //PImage img;
+  
 
 
 
@@ -82,6 +85,9 @@ class objectClass
             fill(objectR, objectG, objectB);
             noStroke();
             rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+            //img = loadImage(objectName+".png");
+            //image(img, (width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+            
           }
         }
         success1++;

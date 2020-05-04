@@ -7,8 +7,9 @@ void objects() {
     //bed.referenceObject();
     //monitor.referenceObject();
 
-    showerCabin.referenceObject();
-    toilet.placeObject(141, 2, 0);
+    toilet.referenceObject();
+    //showerCabin.referenceObject();
+   // toilet.placeObject(141, 2, 0);
 
     saveFrame("Results/alternative-##.png");
     setup();
