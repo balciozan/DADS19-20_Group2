@@ -245,7 +245,7 @@ class objectClass
 
           for (int i = realX; i < realX + objectWidth; i++)
           {
-            for (int j= realY + 1; j< realY + objectDepth; j++)
+            for (int j= realY + 1; j< realY + objectDepth + 1; j++)
             {
               int newi = i;
               int newj = j;
