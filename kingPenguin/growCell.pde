@@ -37,12 +37,13 @@ class growCell
     colorBorder = cBorder;
   }
 
-  void firstCell() {
+  void firstCell() { // Function for creating the first cells. Runs only one time in each organization alternative.
     int successFirst = 0;
 
     while ( successFirst == 0) {
-      m = int(random(1, 5));
-      if (m == 1) {
+      m = int(random(1, 5)); // According to the 'm' value, first cell will be placed either left, right, up or down.
+
+      if (m == 1) { // Left border
         k = 0;
         l = int(random(0, Ybol-1));
 
@@ -66,7 +67,7 @@ class growCell
             }
           }
         }
-      } else if (m == 2) {
+      } else if (m == 2) { // Right border
         k = Xbol-1;
         l = int(random(0, Ybol-1));
 
@@ -90,7 +91,7 @@ class growCell
             }
           }
         }
-      } else if (m == 3) {
+      } else if (m == 3) { // Upper border
         k = int(random(0, Xbol-1));
         l = 0;
 
@@ -114,7 +115,7 @@ class growCell
             }
           }
         }
-      } else if (m == 4) {
+      } else if (m == 4) { // Down border
         k = int(random(0, Xbol-1));
         l = Ybol-1;
 
@@ -143,7 +144,7 @@ class growCell
   }
 
 
-  void gravityCenter() {
+  void gravityCenter() { // Calculates the gravity center of the zones each time a new cell added.
     int newi = 0;
     int newj = 0;
 
@@ -168,7 +169,7 @@ class growCell
   }
 
 
-  void spaceNaming() { 
+  void spaceNaming() { // Names the spaces at the end of the process.
     gravityCenter();
     textSize(16);
     textAlign(CENTER);
@@ -212,7 +213,7 @@ void cornerCell() {     NO LONGER NEEDED
    }
    */
 
-  void growing() {
+  void growing() { // Function lets the zones grow one by one.
     int whilecnt = 0;
     int i = 0;
     int j = 0;

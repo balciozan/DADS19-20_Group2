@@ -1,5 +1,10 @@
-void growFilter() {
+// At the end of the zone growing, growFilter() function checks the zones and removes
+// the irregularities by checking each side of the cells one by one, and if another color
+// of cells are predominated, alters the selected cell to other color.
 
+void growFilter() { 
+// First part of the function checks the 8 cells around the selected cell. Alters the chosen one if
+// there are more than 5 cells with same color.
   for (int j=1; j<Ybol-1; j++)
   {
     for (int i=1; i<Xbol-1; i++)
@@ -63,6 +68,8 @@ void growFilter() {
   
 
 /*  
+// Second part of the function checks the 4 cells around the selected cell and alters the chosen one
+// if there are more than 3 cells in with color.
   for (int j=1; j<Ybol-1; j++)
   {
     for (int i=1; i<Xbol-1; i++)

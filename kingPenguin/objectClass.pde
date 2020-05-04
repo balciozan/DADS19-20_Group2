@@ -18,9 +18,9 @@ class objectClass
   int objectMarRear;
   int objectSource;
   int objectFixed;
-  
+
   //PImage img;
-  
+
 
 
 
@@ -43,7 +43,7 @@ class objectClass
     objectB = oB;
   }
 
-  void referenceObject() {
+  void referenceObject() { // Function for placing reference objects. Each zone has 1 reference object.
     listX = new IntList();
     listY = new IntList();
     listX.clear();
@@ -87,7 +87,6 @@ class objectClass
             rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
             //img = loadImage(objectName+".png");
             //image(img, (width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
-            
           }
         }
         success1++;
@@ -97,7 +96,7 @@ class objectClass
     }
   }
 
-  void placeObject(int refObject, int method, int dist) {
+  void placeObject(int refObject, int method, int dist) { // Function for placing dependent objects.
     // refObject is the reference for the object to be placed.
     // method can have 3 values for now. 0 = no relation / 1 = near to / 2 = next to.
     // if the method is equal to 1, dist will determine the range.

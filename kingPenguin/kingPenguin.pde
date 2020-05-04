@@ -24,15 +24,16 @@ int cyanSize = 0;
 //int blueSize = 0; No longer needed
 //int yellowSize = 0; No longer needed
 
-int objectTrigger = 0;
+int objectTrigger = 0; // Integer which starts the object placing part of the algorithm when it is equal to 1.
 
-
+// Defining the objects of growCell class for each zone.
 growCell red;
 growCell green;
 growCell cyan;
 //growCell blue; No longer needed
 //growCell yellow; No longer needed
 
+//Defining the objects of objectClass for each object.
 objectClass table;
 objectClass chair;
 objectClass kitchenUnit;
@@ -41,7 +42,7 @@ objectClass monitor;
 objectClass toilet;
 objectClass showerCabin;
 
-
+// Creation of the matrix which will be the template of the space.
 int [][] matrix = new int[Xbol][Ybol]; 
 
 void setup()
@@ -66,8 +67,8 @@ void setup()
   monitor = new objectClass("monitor", 141, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 100, 90);
   toilet = new objectClass("toilet", 151, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 40, 10, 120);
   showerCabin = new objectClass("shower cabin", 141, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 30, 60, 90);
-  
-  
+
+  // Counter integers for each zone.  
   redSize = 0;
   greenSize = 0;
   cyanSize = 0;
@@ -109,8 +110,8 @@ Below, one cell for each color - which represents different spaces - are created
 
 void draw()
 {
-  grow();
-  objects();
+  grow(); // Function includes all the functions which are related with zones.
+  objects(); // Function includes all the functions which are related with objects.
 }
 
 
