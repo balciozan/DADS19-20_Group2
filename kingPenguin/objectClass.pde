@@ -145,40 +145,40 @@ class objectClass
           listPos.append(3);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realY - objectDepth < 0) {  // Upper boundry -- add only to right, down and left
+        } else if (realY - objectDepth < 0 && realX - objectWidth >= 0 && realX + objectWidth < Xbol) {  // Upper boundry -- add only to right, down and left
           listPos.append(2);
           listPos.append(3);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX + objectWidth > Xbol && realY - objectDepth < 0) {  // Right upper corner -- add only to down and left
+        } else if (realX + objectWidth >= Xbol && realY - objectDepth < 0) {  // Right upper corner -- add only to down and left
           listPos.append(3);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX + objectWidth + 1 > Xbol) {  // Right boundry -- add only to down, left and up
+        } else if (realX + objectWidth >= Xbol && realY + objectDepth < Ybol && realY - objectDepth >= 0) {  // Right boundry -- add only to down, left and up
           listPos.append(1);
           listPos.append(3);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX + objectWidth + 1 > Xbol && realY + objectDepth + 1 > Ybol) {  // Right down corner -- add only to left and up
+        } else if (realX + objectWidth >= Xbol && realY + objectDepth >= Ybol) {  // Right down corner -- add only to left and up
           listPos.append(1);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realY + objectDepth + 1 > Ybol) {  // Down boundry -- add only to left, up and right
+        } else if (realY + objectDepth >= Ybol && realX - objectWidth >= 0 && realX + objectWidth < Xbol) {  // Down boundry -- add only to left, up and right
           listPos.append(1);
           listPos.append(2);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX - objectWidth < 0 && realY + objectDepth > Ybol) {  // Left down corner -- add only to up and right
+        } else if (realX - objectWidth < 0 && realY + objectDepth >= Ybol) {  // Left down corner -- add only to up and right
           listPos.append(1);
           listPos.append(2);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX - objectWidth < 0) {  // Left boundry -- add only to up, right and down
+        } else if (realX - objectWidth < 0 && realY + objectDepth < Ybol && realY - objectDepth >= 0) {  // Left boundry -- add only to up, right and down
           listPos.append(1);
           listPos.append(2);
           listPos.append(3);
@@ -245,7 +245,7 @@ class objectClass
 
           for (int i = realX; i < realX + objectWidth; i++)
           {
-            for (int j= realY + 1; j< realY + objectDepth + 1; j++)
+            for (int j= realY + 1; j < realY + objectDepth + 1; j++)
             {
               int newi = i;
               int newj = j;
