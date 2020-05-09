@@ -234,7 +234,7 @@ void cornerCell() {     NO LONGER NEEDED
             int  randx = int(random(0, Xbol));
             int  randy = int(random(0, Ybol));
             //float dist = dist(randx, randy, 18, 1); 
-            float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 0.5; //dynamic center input
+            float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 1; //dynamic center input
             //float cellRange = sqrt(colorBorder * (height/Ybol) * (width/Xbol) / PI) * 0.038 ; //static center input
 
             if (matrix[randx][randy] == colorValue && dist(randx, randy, centerX, centerY) < cellRange) { //dynamic center
