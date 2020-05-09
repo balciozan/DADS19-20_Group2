@@ -66,7 +66,7 @@ void setup()
   bed = new objectClass("bed", 131, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 90, 100, 0);
   monitor = new objectClass("monitor", 141, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 100, 90);
   toilet = new objectClass("toilet", 151, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 40, 10, 120);
-  showerCabin = new objectClass("shower cabin", 141, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 30, 60, 90);
+  showerCabin = new objectClass("shower cabin", 161, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 30, 60, 90);
 
   // Counter integers for each zone.  
   redSize = 0;
