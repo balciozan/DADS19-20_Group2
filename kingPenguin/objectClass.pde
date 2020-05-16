@@ -116,7 +116,7 @@ class objectClass
         }
       }
     }
- 
+
 
     int success1 = 0;
     int whilecnt = 0;
@@ -141,45 +141,45 @@ class objectClass
 
         whilecnt2++;
 
-        if (realX - objectWidth < 0 && realY - objectDepth < 0) {  // Left upper corner -- add only to right and down
+        if (realX - objectWidth < 0 && realY - objectDepth < 0 && realY + objectDepth < Ybol && realX + objectWidth < Xbol) {  // Left upper corner -- add only to right and down
           listPos.append(2);
           listPos.append(3);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realY - objectDepth < 0 && realX - objectWidth >= 0 && realX + objectWidth < Xbol) {  // Upper boundry -- add only to right, down and left
+        } else if (realY - objectDepth < 0 && realX - objectWidth >= 0 && realX + objectWidth < Xbol && realY + objectDepth < Ybol) {  // Upper boundry -- add only to right, down and left
           listPos.append(2);
           listPos.append(3);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX + objectWidth >= Xbol && realY - objectDepth < 0) {  // Right upper corner -- add only to down and left
+        } else if (realX + objectWidth >= Xbol && realY - objectDepth < 0 && realY + objectDepth < Ybol && realX - objectWidth >= 0) {  // Right upper corner -- add only to down and left
           listPos.append(3);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX + objectWidth >= Xbol && realY + objectDepth < Ybol && realY - objectDepth >= 0) {  // Right boundry -- add only to down, left and up
+        } else if (realX + objectWidth >= Xbol && realY + objectDepth < Ybol && realY - objectDepth >= 0 && realX - objectWidth >= 0) {  // Right boundry -- add only to down, left and up
           listPos.append(1);
           listPos.append(3);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX + objectWidth >= Xbol && realY + objectDepth >= Ybol) {  // Right down corner -- add only to left and up
+        } else if (realX + objectWidth >= Xbol && realY + objectDepth >= Ybol && realX - objectWidth >= 0 && realY - objectDepth >= 0) {  // Right down corner -- add only to left and up
           listPos.append(1);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realY + objectDepth >= Ybol && realX - objectWidth >= 0 && realX + objectWidth < Xbol) {  // Down boundry -- add only to left, up and right
+        } else if (realY + objectDepth >= Ybol && realX - objectWidth >= 0 && realX + objectWidth < Xbol && realY - objectDepth >= 0) {  // Down boundry -- add only to left, up and right
           listPos.append(1);
           listPos.append(2);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX - objectWidth < 0 && realY + objectDepth >= Ybol) {  // Left down corner -- add only to up and right
+        } else if (realX - objectWidth < 0 && realY + objectDepth >= Ybol && realX + objectWidth < Xbol  && realY - objectDepth >= 0) {  // Left down corner -- add only to up and right
           listPos.append(1);
           listPos.append(2);
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
-        } else if (realX - objectWidth < 0 && realY + objectDepth < Ybol && realY - objectDepth >= 0) {  // Left boundry -- add only to up, right and down
+        } else if (realX - objectWidth < 0 && realY + objectDepth < Ybol && realY - objectDepth >= 0 && realX + objectWidth < Xbol) {  // Left boundry -- add only to up, right and down
           listPos.append(1);
           listPos.append(2);
           listPos.append(3);
@@ -193,71 +193,82 @@ class objectClass
           randOpt = int(random(0, listPos.size()));
           objectOpt = listPos.get(randOpt);
         }
+        
+        //println(whilecnt2);
+        //println(whilecnt);
+        
+        if (objectOpt == 2 && realY + objectDepth <= Ybol && whilecnt2 < 1000) {  // right
+          if (matrix[realX + 1][realY] == objectZoneValue && matrix[realX + objectWidth][realY + objectDepth - 1] == objectZoneValue) {
 
-        if (objectOpt == 2 && matrix[realX + 1][realY] == objectZoneValue && matrix[realX + objectWidth][realY + objectDepth - 1] == objectZoneValue) {  // right
-
-          for (int i = realX + 1; i < realX + objectWidth + 1; i++)
-          {
-            for (int j= realY; j< realY + objectDepth; j++)
+            for (int i = realX + 1; i < realX + objectWidth + 1; i++)
             {
-              int newi = i;
-              int newj = j;
-              matrix[newi][newj] = objectValue;
-              fill(objectR, objectG, objectB);
-              noStroke();
-              rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              for (int j= realY; j< realY + objectDepth; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
             }
+            success2++;
+            success1++;
           }
-          success2++;
-          success1++;
-        } else if (objectOpt == 4 && matrix[realX - objectWidth][realY] == objectZoneValue && matrix[realX -1][realY + objectDepth - 1] == objectZoneValue) { // left
+        } else if (objectOpt == 4 && realY + objectDepth <= Ybol && whilecnt2 < 1000) {  // left
+          if (matrix[realX - objectWidth][realY] == objectZoneValue && matrix[realX -1][realY + objectDepth - 1] == objectZoneValue) {
 
-          for (int i = realX - objectWidth; i < realX; i++)
-          {
-            for (int j= realY; j< realY + objectDepth; j++)
+            for (int i = realX - objectWidth; i < realX; i++)
             {
-              int newi = i;
-              int newj = j;
-              matrix[newi][newj] = objectValue;
-              fill(objectR, objectG, objectB);
-              noStroke();
-              rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              for (int j= realY; j< realY + objectDepth; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
             }
+            success2++;
+            success1++;
           }
-          success2++;
-          success1++;
-        } else if (objectOpt == 1 && matrix[realX][realY - objectDepth] == objectZoneValue && matrix[realX + objectWidth - 1][realY - 1] == objectZoneValue) {  // up
+        } else if (objectOpt == 1 && realX + objectWidth <= Xbol && whilecnt2 < 1000) {  // up
+          if (matrix[realX][realY - objectDepth] == objectZoneValue && matrix[realX + objectWidth - 1][realY - 1] == objectZoneValue) {
 
-          for (int i = realX; i < realX + objectWidth; i++)
-          {
-            for (int j= realY - objectDepth; j< realY; j++)
+            for (int i = realX; i < realX + objectWidth; i++)
             {
-              int newi = i;
-              int newj = j;
-              matrix[newi][newj] = objectValue;
-              fill(objectR, objectG, objectB);
-              noStroke();
-              rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              for (int j= realY - objectDepth; j< realY; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
             }
+            success2++;
+            success1++;
           }
-          success2++;
-          success1++;
-        } else if (objectOpt == 3 && matrix[realX][realY + 1] == objectZoneValue && matrix[realX + objectWidth - 1][realY + objectDepth] == objectZoneValue) {  // down
+        } else if (objectOpt == 3 && realX + objectWidth <= Xbol && whilecnt2 < 1000) {  // down
+          if (matrix[realX][realY + 1] == objectZoneValue && matrix[realX + objectWidth - 1][realY + objectDepth] == objectZoneValue) {
 
-          for (int i = realX; i < realX + objectWidth; i++)
-          {
-            for (int j= realY + 1; j < realY + objectDepth + 1; j++)
+            for (int i = realX; i < realX + objectWidth; i++)
             {
-              int newi = i;
-              int newj = j;
-              matrix[newi][newj] = objectValue;
-              fill(objectR, objectG, objectB);
-              noStroke();
-              rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              for (int j= realY + 1; j < realY + objectDepth + 1; j++)
+              {
+                int newi = i;
+                int newj = j;
+                matrix[newi][newj] = objectValue;
+                fill(objectR, objectG, objectB);
+                noStroke();
+                rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+              }
             }
+            success2++;
+            success1++;
           }
-          success2++;
-          success1++;
         } else if (whilecnt2 >= 1000) {
           success2++;
         }
