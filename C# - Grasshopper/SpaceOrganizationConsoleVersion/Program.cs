@@ -955,13 +955,11 @@ public class Script_Instance : GH_ScriptInstance
 
             }
 
-
             else
             {
                 ObjBox = new Box();
                 marginBox = new Box();
             }
-
         }
 
         public void PlaceObject(int[,,] emptyFullArray, int[,,] areaArray, out Box ObjBox, out Box marginBox, out bool placementFailed)
@@ -1367,17 +1365,17 @@ public class Script_Instance : GH_ScriptInstance
                 if (emptyBool && sameZone)
                 {
                     suitableDirection = true;
-                    Rhino.RhinoApp.WriteLine("Place Front:  Conditions are  satisfied ");
+                    Rhino.RhinoApp.WriteLine("Place Back:  Conditions are  satisfied ");
                 }
                 else
                 {
-                    Rhino.RhinoApp.WriteLine("Place Front:  Conditions are not satisfied ");
+                    Rhino.RhinoApp.WriteLine("Place Back:  Conditions are not satisfied ");
                     suitableDirection = false;
                 }
             }
             else
             {
-                Rhino.RhinoApp.WriteLine("Place Front:  Conditions are not satisfied ");
+                Rhino.RhinoApp.WriteLine("Place Back:  Conditions are not satisfied ");
                 suitableDirection = false;
             }
             return suitableDirection;
@@ -1466,17 +1464,17 @@ public class Script_Instance : GH_ScriptInstance
                 if (emptyBool && sameZone)
                 {
                     suitableDirection = true;
-                    Rhino.RhinoApp.WriteLine("Place Front:  Conditions are  satisfied ");
+                    Rhino.RhinoApp.WriteLine("Place Left:  Conditions are  satisfied ");
                 }
                 else
                 {
-                    Rhino.RhinoApp.WriteLine("Place Front:  Conditions are not satisfied ");
+                    Rhino.RhinoApp.WriteLine("Place Left:  Conditions are not satisfied ");
                     suitableDirection = false;
                 }
             }
             else
             {
-                Rhino.RhinoApp.WriteLine("Place Front:  Conditions are not satisfied ");
+                Rhino.RhinoApp.WriteLine("Place Left:  Conditions are not satisfied ");
                 suitableDirection = false;
             }
             return suitableDirection;
