@@ -1910,11 +1910,6 @@ public class Script_Instance : GH_ScriptInstance
 
     static void Spread(int[,,] arr, ref double spaceSize, List<int> spaceCoordList, ref int counter, int spaceLimit, int cellSize)
     {
-        /*ARGUMENTS
-     * The main array which has rectangular form(will be 3d in short) ,
-     * spaceSize = Maximum limit that can grow.  ,
-     * spaceCoordList =  the cells of the zone which has been already defined. )
-     */
         var rand = new Random();
         var directionList = new List<int>();
         int Xcoord;
@@ -1922,357 +1917,76 @@ public class Script_Instance : GH_ScriptInstance
         bool draw = false;
         int trycount = 0;
 
-        while (draw == false && counter <= spaceSize)
+        bool inTop;
+        bool inRight;
+        bool inBottom;
+        bool inLeft;
+
+        bool enoughTries = false;
+
+        while (draw == false && counter * 60 * 60 < spaceSize && enoughTries == false)
         {
-            if (counter <= spaceSize) //Can be deleted. The condition is added to the While Loop Conditions.
+            var randomCellIndex = rand.Next(spaceCoordList.Count / 2);
+
+            Xcoord = spaceCoordList[2 * randomCellIndex];
+            Ycoord = spaceCoordList[2 * randomCellIndex + 1];
+
+            inTop = (Ycoord + 1 < arr.GetLength(1));              // Check top border
+            inRight = (Xcoord + 1 < arr.GetLength(0));              // Check Right border
+            inBottom = (Ycoord - 1 < arr.GetLength(1));              // Check bottom border
+            inLeft = (Xcoord - 1 < arr.GetLength(1));             //  Check left border
+
+            if (inRight)
             {
-                var randomCellIndex = rand.Next(spaceCoordList.Count / 2);
+                if (arr[Xcoord + 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord + 1, Ycoord, cellSize) < spaceLimit) // Check if possible new cell is still white or not!
+                    directionList.AddRange(new int[2] { (Xcoord + 1), Ycoord }); //Store possible spread directions in a list.
+            }
 
-                Xcoord = spaceCoordList[2 * randomCellIndex];
-                Ycoord = spaceCoordList[2 * randomCellIndex + 1];
+            if (inLeft)
+            {
+                if (arr[Xcoord - 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord - 1, Ycoord, cellSize) < spaceLimit)
+                    directionList.AddRange(new int[2] { (Xcoord - 1), Ycoord }); //Store possible spread directions in a list.
+            }
 
-                if (Xcoord < arr.GetLength(0) - 1 && Xcoord > 0 && Ycoord > 0 && Ycoord < arr.GetLength(1) - 1)
-                {
-                    /* Check the conditions INSIDE borders */
-                    if (arr[Xcoord + 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord + 1, Ycoord, cellSize) < spaceLimit) // Check if possible new cell is still white or not!
-                        directionList.AddRange(new int[2] { (Xcoord + 1), Ycoord }); //Store possible spread directions in a list.
+            if (inTop)
+            {
+                if (arr[Xcoord, Ycoord + 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord + 1, cellSize) < spaceLimit)
+                    directionList.AddRange(new int[2] { (Xcoord), Ycoord + 1 }); //Store possible spread directions in a list.
+            }
 
-                    if (arr[Xcoord - 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord - 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord - 1), Ycoord }); //Store possible spread directions in a list.
+            if (inBottom)
+            {
+                if (arr[Xcoord, Ycoord - 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord - 1, cellSize) < spaceLimit)
+                    directionList.AddRange(new int[2] { (Xcoord), (Ycoord - 1) }); //Store possible spread directions in a list.
+            }
 
-                    if (arr[Xcoord, Ycoord + 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord + 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), Ycoord + 1 }); //Store possible spread directions in a list.
 
-                    if (arr[Xcoord, Ycoord - 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord - 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), (Ycoord - 1) }); //Store possible spread directions in a list.
-
-                    if (directionList.Count > 0)
-                    {
-                        var randomIndex = rand.Next(directionList.Count / 2);
-                        int a = directionList[2 * randomIndex];
-                        int b = directionList[2 * randomIndex + 1];
-
-                        arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
-
-                        spaceCoordList.AddRange(new int[2] { a, b });
-
-                        directionList.Clear();
-                        directionList.TrimExcess();
-                        draw = true;
-                        counter++;
-                    }
-                    else
-                    {
-                        trycount++;
-                        if (trycount >= spaceCoordList.Count)
-                        {
-                            draw = true;
-                            //Print("trycountNumber is ={0}", trycount);
-                        }
-                    }
-                }
-
-                /* EDGE CONDITIONS */
-                //RIGHT
-                else if (Xcoord == (arr.GetLength(0) - 1) && Ycoord != 0 && Ycoord != (arr.GetLength(1) - 1))
-                {
-                    if (arr[Xcoord - 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord - 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord - 1), (Ycoord) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord, Ycoord + 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord + 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), (Ycoord + 1) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord, Ycoord - 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord - 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), (Ycoord - 1) }); //Store possible spread directions in a list.
-
-                    if (directionList.Count > 0)
-                    {
-                        var randomIndex = rand.Next(directionList.Count / 2);
-                        int a = directionList[2 * randomIndex];
-                        int b = directionList[2 * randomIndex + 1];
-
-                        arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
-
-                        spaceCoordList.AddRange(new int[2] { a, b });
-
-                        directionList.Clear();
-                        directionList.TrimExcess();
-                        draw = true;
-                        counter++;
-                    }
-                    else
-                    {
-                        trycount++;
-                        if (trycount >= spaceCoordList.Count)
-                        {
-                            draw = true;
-                            //Print("trycountNumber is ={0}", trycount);
-                        }
-                    }
-                }
-
-                //Left
-                else if (Xcoord == 0 && Ycoord != 0 && Ycoord != (arr.GetLength(1) - 1))
-                {
-
-                    if (arr[Xcoord + 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord + 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord + 1), (Ycoord) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord, Ycoord + 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord + 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), (Ycoord + 1) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord, Ycoord - 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord - 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), (Ycoord - 1) }); //Store possible spread directions in a list.
-                    if (directionList.Count > 0)
-                    {
-                        var randomIndex = rand.Next(directionList.Count / 2);
-                        int a = directionList[2 * randomIndex];
-                        int b = directionList[2 * randomIndex + 1];
-
-                        arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
-
-                        spaceCoordList.AddRange(new int[2] { a, b });
-
-                        directionList.Clear();
-                        directionList.TrimExcess();
-                        draw = true;
-                        counter++;
-                    }
-                    else
-                    {
-                        trycount++;
-                        if (trycount >= spaceCoordList.Count)
-                        {
-                            draw = true;
-                            //Print("trycountNumber is ={0}", trycount);
-                        }
-                    }
-
-                }
-                //TOP
-                else if ((Ycoord == arr.GetLength(1) - 1) && Xcoord != 0 && Xcoord != (arr.GetLength(0) - 1))
-                {
-
-                    if (arr[Xcoord, Ycoord - 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord - 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), (Ycoord - 1) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord + 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord + 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord + 1), (Ycoord) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord - 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord - 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord - 1), (Ycoord) }); //Store possible spread directions in a list.
-                    if (directionList.Count > 0)
-                    {
-                        var randomIndex = rand.Next(directionList.Count / 2);
-                        int a = directionList[2 * randomIndex];
-                        int b = directionList[2 * randomIndex + 1];
-
-                        arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
-
-                        spaceCoordList.AddRange(new int[2] { a, b });
-
-                        directionList.Clear();
-                        directionList.TrimExcess();
-                        draw = true;
-                        counter++;
-                    }
-                    else
-                    {
-                        trycount++;
-                        if (trycount >= spaceCoordList.Count)
-                        {
-                            draw = true;
-                            //Print("trycountNumber is ={0}", trycount);
-                        }
-                    }
-                }
-                //BOTTOM
-                else if (Ycoord == 0 && Xcoord != 0 && Xcoord != (arr.GetLength(0) - 1))
-                {
-                    if (arr[Xcoord, Ycoord + 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord + 1, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord), (Ycoord + 1) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord + 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord + 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord + 1), (Ycoord) }); //Store possible spread directions in a list.
-                    if (arr[Xcoord - 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord - 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.AddRange(new int[2] { (Xcoord - 1), (Ycoord) }); //Store possible spread directions in a list.
-                    if (directionList.Count > 0)
-                    {
-                        var randomIndex = rand.Next(directionList.Count / 2);
-                        int a = directionList[2 * randomIndex];
-                        int b = directionList[2 * randomIndex + 1];
-
-                        arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
-
-                        spaceCoordList.AddRange(new int[2] { a, b });
-
-                        directionList.Clear();
-                        directionList.TrimExcess();
-                        draw = true;
-                        counter++;
-                    }
-                    else
-                    {
-                        trycount++;
-                        if (trycount >= spaceCoordList.Count)
-                        {
-                            draw = true;
-                            //Print("trycountNumber is ={0}", trycount);
-                        }
-                    }
-                }
-
-                //LEFT BOTTOM
-                else if (Xcoord == 0 && Ycoord == 0)
-                {
-                    if (arr[Xcoord, Ycoord + 1, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord, Ycoord + 1, cellSize) < spaceLimit)
-                        directionList.Add(Xcoord); directionList.Add(Ycoord + 1);
-
-                    if (arr[Xcoord + 1, Ycoord, 0] == 0 && DistanceCalculate(spaceCoordList, Xcoord + 1, Ycoord, cellSize) < spaceLimit)
-                        directionList.Add(Xcoord + 1); directionList.Add(Ycoord);
-
-                    if (directionList.Count > 0)
-                    {
-
-                        var randomIndex = rand.Next(directionList.Count / 2);
-
-                        int a = directionList[2 * randomIndex];
-                        int b = directionList[2 * randomIndex + 1];
-
-                        arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
-
-                        spaceCoordList.AddRange(new int[2] { a, b });
-
-                        directionList.Clear();
-                        directionList.TrimExcess();
-                        draw = true;
-
-                        counter++;
-                        //Print(" Counter Number is : {0}", counter);
-                    }
-                    else
-                    {
-                        trycount++;
-                        if (trycount >= spaceCoordList.Count)
-                        {
-                            draw = true;
-                            //Print("trycountNumber is ={0}", trycount);
-                        }
-                    }
-                }
-                //LEFT  TOP
-                /*
-                else if (Xcoord == 0 && Ycoord == (arr.GetLength(1) - 1))
-                {
-                if (arr[Xcoord + 1, Ycoord] == 0)
-                directionList.Add(Xcoord + 1); directionList.Add(Ycoord);
-
-                if (arr[Xcoord, Ycoord - 1] == 0)
-                directionList.Add(Xcoord); directionList.Add(Ycoord - 1);
-
-                if (directionList.Count > 0)
-                {
+            if (directionList.Count > 0)
+            {
                 var randomIndex = rand.Next(directionList.Count / 2);
-
                 int a = directionList[2 * randomIndex];
                 int b = directionList[2 * randomIndex + 1];
 
-                Rhino.RhinoApp.WriteLine("Left Top "  +  a +  " "  +  b);
-                arr[a, b] = arr[Xcoord, Ycoord];
+                arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
 
                 spaceCoordList.AddRange(new int[2] { a, b });
 
                 directionList.Clear();
                 directionList.TrimExcess();
                 draw = true;
-
                 counter++;
-                //Print(" Counter Number is : {0}", counter);
-                }
-                else
-                {
+            }
+
+            else
+            {
                 trycount++;
                 if (trycount >= spaceCoordList.Count)
                 {
-                draw = true;
-                //Print("trycountNumber is ={0}", trycount);
+                    enoughTries = true;
+                    //Print("trycountNumber is ={0}", trycount);
                 }
-                }
-                }
-                */
-                /*
-                //RIGHT TOP
-                else if (Xcoord == (arr.GetLength(0) - 1) && Ycoord == (arr.GetLength(1) - 1))
-                {
-                if (arr[Xcoord, Ycoord - 1] == 0)
-                directionList.Add(Xcoord); directionList.Add(Ycoord - 1);
-
-                if (arr[Xcoord - 1, Ycoord] == 0)
-                directionList.Add(Xcoord - 1); directionList.Add(Ycoord);
-
-                if (directionList.Count > 0)
-                {
-                var randomIndex = rand.Next(directionList.Count / 2);
-
-                int a = directionList[2 * randomIndex];
-                int b = directionList[2 * randomIndex + 1];
-                Rhino.RhinoApp.WriteLine(" Right top "+ a + " " + b);
-                arr[a, b] = arr[Xcoord, Ycoord];
-
-                //spaceCoordList.AddRange(new int[2] { a, b });
-
-                directionList.Clear();
-                directionList.TrimExcess();
-                draw = true;
-
-                counter++;
-                //Print(" Counter Number is : {0}", counter);
-                }
-                else
-                {
-                trycount++;
-                if (trycount >= spaceCoordList.Count)
-                {
-                draw = true;
-                //Print("trycountNumber is ={0}", trycount);
-                }
-                }
-                }
-                */
-                //RIGHT BOTTOM
-                else if (Xcoord == (arr.GetLength(0) - 1) && Ycoord == 0)
-                {
-                    if (arr[Xcoord, Ycoord + 1, 0] == 0)
-                        directionList.Add(Xcoord); directionList.Add(Ycoord + 1);
-
-                    if (arr[Xcoord - 1, Ycoord, 0] == 0)
-                        directionList.Add(Xcoord - 1); directionList.Add(Ycoord);
-
-                    if (directionList.Count > 0)
-                    {
-                        var randomIndex = rand.Next(directionList.Count / 2);
-
-                        int a = directionList[2 * randomIndex];
-                        int b = directionList[2 * randomIndex + 1];
-
-                        arr[a, b, 0] = arr[Xcoord, Ycoord, 0];
-
-                        spaceCoordList.AddRange(new int[2] { a, b });
-
-                        directionList.Clear();
-                        directionList.TrimExcess();
-
-                        draw = true;
-                        counter++;
-                        //Print(" Counter Number is : {0}", counter);
-                    }
-                    else
-                    {
-                        trycount++;
-                        if (trycount >= spaceCoordList.Count)
-                        {
-                            draw = true;
-                            //Print("trycountNumber is ={0}", trycount);
-                        }
-                    }
-                }
-                /* EDGE CONDITIONS */
             }
         }
-
     }
 
     public override void InvokeRunScript(IGH_Component owner, object rhinoDocument, int iteration, List<object> inputs, IGH_DataAccess DA)
