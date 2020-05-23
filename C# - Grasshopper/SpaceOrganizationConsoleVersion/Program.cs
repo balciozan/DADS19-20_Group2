@@ -426,6 +426,8 @@ public class Script_Instance : GH_ScriptInstance
         public Vector3d VectorMargin;
         public Vector3d VectorObject;
 
+        Plane PlaneBase ;
+
         public Objects()
         {
         }
@@ -459,6 +461,8 @@ public class Script_Instance : GH_ScriptInstance
             this.baseX = Obj.Plane.OriginX;
             this.baseY = Obj.Plane.OriginY;
             this.baseZ = Obj.Plane.OriginZ;
+
+             this.PlaneBase = new Plane(PreviousObject.PlaneBase.Origin, new Vector3d(0, 0, 1));
 
             this.SpaceList = spaceList;
         }
@@ -500,6 +504,37 @@ public class Script_Instance : GH_ScriptInstance
 
             VectorMargin.Rotate(Angle, new Vector3d(0, 0, 1));
             VectorObject.Rotate(Angle, new Vector3d(0, 0, 1));
+        }
+
+        public void Mirroring( int axis )
+        {
+            Point3d pointa = new Point3d(this.PlaneBase.OriginX, this.PlaneBase.OriginY, this.PlaneBase.OriginZ);
+            Vector3d pointb = new Vector3d();
+
+            if (axis == 1 )
+            {
+                //Z Symmetry
+                 pointb = new Vector3d(0, 0, 1);
+            }
+
+            else if (axis == 2)
+            {
+                //X Symmtry
+                 pointb = new Vector3d(0, 1, 0);
+            }
+
+            else if (axis == 3)
+            {
+                // Y Symmetry
+                pointb = new Vector3d(1, 0, 0);
+            }
+
+            Plane planee = new Plane(pointa, pointb);
+
+            VectorMargin.Transform(Transform.Mirror(planee));
+            VectorObject.Transform(Transform.Mirror(planee));
+
+
         }
 
         public void PlaceRefObject(int[,,] emptyFullArray, int[,,] areaArray, out Box ObjBox, out Box marginBox)
