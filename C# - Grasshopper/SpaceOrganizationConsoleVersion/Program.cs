@@ -423,6 +423,10 @@ public class Script_Instance : GH_ScriptInstance
         public double YCellMargin;
         public double ZCellMargin;
 
+        public double XCellObject;
+        public double YCellObject;
+        public double ZCellObject;
+
         public Vector3d VectorMargin;
         public Vector3d VectorObject;
 
@@ -537,11 +541,20 @@ public class Script_Instance : GH_ScriptInstance
 
         }
 
+        Vector3d vec = new Vector3d(1, 4, 5);
+        
+
         public void PlaceRefObject(int[,,] emptyFullArray, int[,,] areaArray, out Box ObjBox, out Box marginBox)
         {
-            this.XCellMargin = Math.Ceiling((double)(this.MrjWidth / CellSize));
+            this.XCellMargin = (this.VectorMargin. < 0 ? -1 : 1) Math.Ceiling((double)(this.MrjWidth / CellSize));
             this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
             this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+
+            this.XCellObject = ;
+            this.YCellObject = ;
+            this.ZCellObject = ;
+
+
 
             bool emptyBool = true;
             bool sameZone = true;
