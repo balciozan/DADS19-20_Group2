@@ -18,6 +18,7 @@ class objectClass
   int objectMarRear;
   int objectSource;
   int objectFixed;
+  int objectRotated;
 
   //PImage img;
 int refWidth;
@@ -41,6 +42,25 @@ int refDepth;
     objectR = oR;
     objectG = oG;
     objectB = oB;
+  }
+   objectClass(String oName, int oValue, int oZoneValue, int oWidth, int oDepth, int oHeight, int oMarLeft, int oMarRight, int oMarFront, int oMarRear, int oFixed, int oSource, int oR, int oG, int oB, int rotated) {
+
+    objectName = oName;
+    objectValue = oValue;
+    objectZoneValue = oZoneValue;
+    objectWidth = oWidth;
+    objectDepth = oDepth;
+    objectHeight = oHeight;
+    objectMarLeft = oMarLeft;
+    objectMarRight = oMarRight;
+    objectMarFront = oMarFront;
+    objectMarRear = oMarRear;
+    objectFixed = oFixed;
+    objectSource = oSource;
+    objectR = oR;
+    objectG = oG;
+    objectB = oB;
+    objectRotated= rotated;
   }
 
   void referenceObject() { // Function for placing reference objects. Each zone has 1 reference object.
@@ -96,8 +116,8 @@ int refDepth;
     }
     
   }
-
-  void placeObject(int refObject, int method, int dist, int longside, int rotate)
+//değişiklik: refobjecti kaldırdım objectClass other ekledim
+  void placeObject( int method, int dist, int longside, int rotate, objectClass referecedObject)
   {
     //rotate 0, 1, 2 = no rotate, rotate,random
     //longside 0,1,2= random, add from long edge, add from short edge
@@ -105,6 +125,27 @@ int refDepth;
     // method can have 3 values for now. 0 = no relation / 1 = near to / 2 = next to.
     // if the method is equal to 1, dist will determine the range.
     
+    
+  int refWidth= referecedObject.objectWidth;
+  int refDepth= referecedObject.objectDepth;
+  int refObject = referecedObject.objectValue;
+  int ifRefRotated = referecedObject.objectRotated; 
+  
+    println("referecedObject " + referecedObject);
+  println("refWidth kontrol " + refWidth);
+  println("objectWidth kontrol " + objectWidth);
+  
+     //if referenced object ratated pull its revised dimesions 
+  if  (ifRefRotated ==1 ) 
+  {
+    int hiddenlayer=0;
+  hiddenlayer= refWidth;
+  refWidth=refDepth;
+  refDepth=hiddenlayer;
+   println("refence object was rotated " );
+  }
+   
+ 
      //**************ROTATE**********************************
      for (int i=0; i<1; i++)
      {
@@ -139,6 +180,8 @@ int refDepth;
         println("no rotate");
     }
      }
+     
+          //**************ROTATEfinished**********************************
     
     listX = new IntList();
     listY = new IntList();
@@ -157,13 +200,9 @@ int refDepth;
       }
     }
    //  println("1fromref "+ listX);//kontrol
-           println("refObject "+refObject);//kontrol
+println("refObject "+refObject);//kontrol
            
-           if (refObject== 121)
-    {
-      refWidth=1;
-      refDepth=3;
-    }
+    
 
    
    
@@ -193,27 +232,31 @@ int refDepth;
         listPos.clear();
 
         whilecnt2++;
+        
+      
                 println("REFDEPTH********"+refDepth);//kontrol
      //controlling if the short edge placed in y axis
         // longside =1 means place next object from long side
         if (longside==1 && refDepth > refWidth )
         {
         longside=2;
+         println("longside changed 1 to 2 "+longside);//kontrol
         
         }
         //controlling if the short edge placed in y axis
         // longside =2 means place next object from short side
-        if (longside==2 && refDepth > refWidth )
+       else if (longside==2 && refDepth > refWidth )
         {
         longside=1;
+        println("longside changed 2 to 1"+longside);//kontrol
         }
-       // referans objenin ölçüsünü almalı
+      
         
-        if (longside == 0 )
+       if (longside == 0 )
          
         //default option where side of the placement does not matter
         {
-           println("longside" +longside);
+           println("longside0" +longside);
           if (realX - objectWidth < 0 && realY - objectDepth < 0) {  // Left upper corner -- add only to right and down
           listPos.append(2);
           listPos.append(3);
@@ -269,9 +312,9 @@ int refDepth;
         }
        else if (longside == 2  )
        
-        //place short edge
+        //place short edge or right or left
         {
-             println("longside" + longside);
+             println("longside2" + longside);
              
           if (realX - objectWidth < 0 && realY - objectDepth < 0) {  // Left upper corner -- add only to right and down
             listPos.append(2);
@@ -380,8 +423,9 @@ int refDepth;
             objectOpt = listPos.get(randOpt);
           }
         }
+     
 
-        if (objectOpt == 2 && matrix[realX + 1][realY] == objectZoneValue && matrix[realX + objectWidth][realY + objectDepth - 1] == objectZoneValue) {  // right
+        if (objectOpt == 2 && matrix[realX + 1][realY] == objectZoneValue && matrix[realX + objectWidth][realY + objectDepth - refDepth] == objectZoneValue) {  // right
 
           for (int i = realX + 1; i < realX + objectWidth + 1; i++)
           {

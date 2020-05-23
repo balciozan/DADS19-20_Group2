@@ -60,7 +60,7 @@ void setup()
 
 
   //objectClass(String oName, int oValue, int oZoneValue, int oWidth, int oDepth, int oHeight, int oMarLeft, int oMarRight, int oMarFront, int oMarRear, int oFixed, int oSource, int oR, int oG, int oB)
-  table = new objectClass("table", 101, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100);
+  table = new objectClass("table", 101, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100,1);
   chair = new objectClass("chair", 111, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 90, 200, 90);
   kitchenUnit = new objectClass("kitchen unit", 121, 1, 3, 1, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
   bed = new objectClass("bed", 131, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 90, 100, 250);

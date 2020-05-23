@@ -1,19 +1,17 @@
 void objects() {
  if (objectTrigger == 1 ) {
- //  (int refObject, int method, int dist, int longside, int rotate)**info
- //rotate 0, 1, 2 = no rotate, rotate,random**info
- //longside 0,1,2= random, add to up/down, add to right/left**info
+ //  (int method, int dist, int longside, int rotate, refobject)**info
+ //rotate 0, 1, 2 = no rotate, rotate,random**info FOR ACTIVATE ROTATE ADD INFO ALSO TO THE OBJECT
+ //longside 0,1,2= random, add to up/down-longside, add to right/left**info
     kitchenUnit.referenceObject();
-      table.placeObject(121,1,1,1,0);
-   chair.placeObject(101, 2, 0,2,0);
-   chair.placeObject(101, 2, 0,2,0);
-   bed.referenceObject();
-   monitor.referenceObject();
-    //bed.placeObject(111,1,1,2,1);
-   // monitor.placeObject(141,1,1,false);
-   
+   table.placeObject(1,1,1,1,kitchenUnit);
+   chair.placeObject(2, 1,1,0, table);
+chair.placeObject(2, 1,1,0, table);
+    // bed.referenceObject();
+  // monitor.referenceObject();
+     
     showerCabin.referenceObject();
-    toilet.placeObject(201, 2, 0,0,0);
+    toilet.placeObject(2, 0,0,0,showerCabin);
 
     saveFrame("Results/alternative-##.png");
     println("success");
