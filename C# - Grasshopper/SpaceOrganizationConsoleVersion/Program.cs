@@ -515,47 +515,37 @@ public class Script_Instance : GH_ScriptInstance
             Point3d pointa = new Point3d(this.PlaneBase.OriginX, this.PlaneBase.OriginY, this.PlaneBase.OriginZ);
             Vector3d pointb = new Vector3d();
 
-            if (axis == 1 )
-            {
-                //Z Symmetry
-                 pointb = new Vector3d(0, 0, 1);
-            }
-
-            else if (axis == 2)
-            {
-                //X Symmtry
-                 pointb = new Vector3d(0, 1, 0);
-            }
-
-            else if (axis == 3)
-            {
-                // Y Symmetry
-                pointb = new Vector3d(1, 0, 0);
-            }
+            if (axis == 1)                //Z Symmetry
+            {pointb = new Vector3d(0, 0, 1);}
+            else if (axis == 2)                //X Symmtry
+            {pointb = new Vector3d(0, 1, 0);}
+            else if (axis == 3)                // Y Symmetry
+            {pointb = new Vector3d(1, 0, 0);}
 
             Plane planee = new Plane(pointa, pointb);
 
             VectorMargin.Transform(Transform.Mirror(planee));
             VectorObject.Transform(Transform.Mirror(planee));
-
-
         }
-
         Vector3d vec = new Vector3d(1, 4, 5);
         
-
         public void PlaceRefObject(int[,,] emptyFullArray, int[,,] areaArray, out Box ObjBox, out Box marginBox)
         {
-            this.XCellMargin = (this.VectorMargin. < 0 ? -1 : 1) Math.Ceiling((double)(this.MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
 
-            this.XCellObject = ;
-            this.YCellObject = ;
-            this.ZCellObject = ;
+            Point3d pointa = new Point3d(0, 0, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+            Plane planee = new Plane(pointa, pointb);
 
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z /150));
 
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
 
+            Vector3d.VectorAngle(VectorMargin, new Vector3d(0, 0, 0));
+   
             bool emptyBool = true;
             bool sameZone = true;
 
@@ -571,8 +561,8 @@ public class Script_Instance : GH_ScriptInstance
                 baseY = (this.SpaceList[2 * randomCellIndex + 1]) * CellSize;
                 baseZ = 0;
 
-                if ((baseX + this.MrjWidth < 360) && (baseY + this.MrjLength < 600) && (baseZ + this.MrjHeight < 300) &&
-                  (baseX + this.MrjWidth > 0) && (baseY + this.MrjLength > 0) && (baseZ + this.MrjHeight > 0))
+                if ((baseX + this.VectorMargin.X < 360) && (baseY + this.VectorMargin.Y < 600) && (baseZ + this.VectorMargin.Z < 300) &&
+                  (baseX + this.VectorMargin.X > 0) && (baseY + this.VectorMargin.Y > 0) && (baseZ + this.VectorMargin.Z > 0))
                 {
                     for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                     {
@@ -628,8 +618,8 @@ public class Script_Instance : GH_ScriptInstance
                 Rhino.RhinoApp.WriteLine("baseY " + this.baseY);
                 Rhino.RhinoApp.WriteLine("baseZ " + this.baseZ);
 
-                Point3d pointa = new Point3d(baseX, baseY, 0);
-                Vector3d pointb = new Vector3d(0, 0, 1);
+                 pointa = new Point3d(baseX, baseY, 0);
+                 pointb = new Vector3d(0, 0, 1);
 
                 Plane planebase = new Plane(pointa, pointb);
 
@@ -656,9 +646,17 @@ public class Script_Instance : GH_ScriptInstance
 
         public void PlaceRefObjectEntrance(int[,,] emptyFullArray, int[,,] areaArray, out Box ObjBox, out Box marginBox, out bool placementFailed)
         {
-            this.XCellMargin = Math.Ceiling((double)(this.MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+            bool inLimits = true;
+            bool suitableDirection = true;
+
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z / 150));
+
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
+
 
             bool emptyBool = true;
             bool sameZone = true;
@@ -676,18 +674,15 @@ public class Script_Instance : GH_ScriptInstance
                 baseY = 0;
                 baseZ = 0;
 
-                //baseX = baseX * CellSize;
-                //baseY = baseY * CellSize;
+                BaseVector = new Vector3d(baseX, baseY, baseZ);
 
                 bool inLimit = false;
 
-
-                if ((baseX + this.MrjWidth < 360) && (baseY + this.MrjLength < 600) && (baseZ + this.MrjHeight < 300) &&
-                  (baseX + this.MrjWidth > 0) && (baseY + this.MrjLength > 0) && (baseZ + this.MrjHeight > 0))
+                if (!((baseX + VectorMargin.X < 360) && (baseY + VectorMargin.Y < 600) && (baseZ + VectorMargin.Z < 300) &&
+              (baseX + VectorMargin.X > 0) && (baseY + VectorMargin.Y > 0) && (baseZ + VectorMargin.Z > 0)))
                 {
                     inLimit = true;
                 }
-
                 if (inLimit)
                 {
                     for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
@@ -713,7 +708,6 @@ public class Script_Instance : GH_ScriptInstance
                     if (emptyBool && sameZone)
                     {
                         placeSuccessful = true;
-
                         Rhino.RhinoApp.WriteLine("Reference Object conditions are successful ");
                         for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                         {
@@ -731,7 +725,6 @@ public class Script_Instance : GH_ScriptInstance
                         Rhino.RhinoApp.WriteLine("Conditions are not satisfied ");
                     }
                 }
-
                 trycount++;
                 Rhino.RhinoApp.WriteLine("Try count is : " + trycount);
                 if (trycount > 60)
@@ -742,14 +735,12 @@ public class Script_Instance : GH_ScriptInstance
             if (trycount < 60 && placeSuccessful)
             {
                 placementFailed = false;
-
                 Rhino.RhinoApp.WriteLine("baseX " + this.baseX);
                 Rhino.RhinoApp.WriteLine("baseY " + this.baseY);
                 Rhino.RhinoApp.WriteLine("baseZ " + this.baseZ);
 
                 Point3d pointa = new Point3d(baseX, 0, 0);
                 Vector3d pointb = new Vector3d(0, 0, 1);
-
                 
                 Plane planebase = new Plane(pointa, pointb);
 
@@ -946,7 +937,6 @@ public class Script_Instance : GH_ScriptInstance
         }
 
         public bool CheckFront(int[,,] emptyFullArray, int[,,] areaArray)
-
         {
             bool inLimits = true;
             bool emptyBool = true;
@@ -954,21 +944,53 @@ public class Script_Instance : GH_ScriptInstance
 
             bool suitableDirection = true;
 
-            this.XCellMargin = Math.Ceiling((double)(this.MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z / 150));
 
-            this.baseX = PreviousObject.baseX;
-            this.baseY = PreviousObject.baseY + CellSize * PreviousObject.YCellMargin;
-            this.baseZ = PreviousObject.baseZ;
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
 
-            if (!((baseX + this.MrjWidth < 360) && (baseY + this.MrjLength < 600) && (baseZ + this.MrjHeight < 300) &&
-              (baseX > 0) && (baseY + this.MrjLength > 0) && (baseZ + this.MrjHeight > 0)))
+            if (VectorMargin.X * VectorMargin.Y > 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY + PreviousObject.YCellMargin;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            else if (VectorMargin.X * VectorMargin.Y < 0)
+            {
+                this.baseX = PreviousObject.baseX + PreviousObject.XCellMargin;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            Point3d pointa = new Point3d(0, 0, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+            Plane planee = new Plane(pointa, pointb);
+
+            Vector3d vecX1 = new Vector3d(1,0,0);
+
+            BaseVector =  new Vector3d(baseX,baseY,baseZ);
+
+
+            if (PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y > 0 && VectorObject.Y > 0 ||
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.Y < 0 ||
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y > 0 && VectorMargin.X < 0 ||
+                PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.X > 0
+                )
+            {
+                suitableDirection = true;
+            }
+
+            if (!((baseX + VectorMargin.X < 360) && (baseY + VectorMargin.Y < 600) && (baseZ + VectorMargin.Z < 300) &&
+              (baseX + VectorMargin.X > 0) && (baseY + VectorMargin.Y > 0) && (baseZ + VectorMargin.Z > 0)))
             {
                 inLimits = false;
             }
 
-            if (inLimits)
+            if (inLimits && suitableDirection)
             {
                 for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                 {
@@ -990,7 +1012,6 @@ public class Script_Instance : GH_ScriptInstance
                         }
                     }
                 }
-
                 if (emptyBool && sameZone)
                 {
                     suitableDirection = true;
@@ -1049,13 +1070,47 @@ public class Script_Instance : GH_ScriptInstance
             bool sameZone = true;
             bool suitableDirection = true;
 
-            this.XCellMargin = Math.Ceiling((double)(this.MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+            /**/
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z / 150));
 
-            this.baseX = PreviousObject.baseX + CellSize * PreviousObject.XCellMargin;
-            this.baseY = PreviousObject.baseY;
-            this.baseZ = PreviousObject.baseZ;
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
+
+            if (VectorMargin.X * VectorMargin.Y > 0)
+            {
+                this.baseX = PreviousObject.baseX + PreviousObject.XCellMargin;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            else if (VectorMargin.X * VectorMargin.Y < 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY + PreviousObject.YCellMargin;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            Point3d pointa = new Point3d(0, 0, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+            Plane planee = new Plane(pointa, pointb);
+
+            Vector3d vecX1 = new Vector3d(1, 0, 0);
+
+            BaseVector = new Vector3d(baseX, baseY, baseZ);
+
+            /**/
+
+            if (PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y > 0 && VectorObject.X > 0 ||
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.X < 0 ||
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y > 0 && VectorMargin.Y > 0 ||
+                PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.Y < 0
+                )
+            {
+                suitableDirection = true; 
+            }
 
             if (!((baseX + this.ObjWidth < 360) && (baseY + this.ObjLength < 600) && (baseZ + this.ObjHeight < 300) &&
               (baseX + this.ObjWidth > 0) && (baseY + this.ObjLength > 0) && (baseZ + this.ObjHeight > 0)))
@@ -1063,7 +1118,7 @@ public class Script_Instance : GH_ScriptInstance
                 inLimits = false;
             }
 
-            if (inLimits)
+            if (inLimits && suitableDirection)
             {
                 for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                 {
@@ -1144,20 +1199,52 @@ public class Script_Instance : GH_ScriptInstance
 
             bool suitableDirection = true;
 
-            this.XCellMargin = Math.Ceiling((double)(this.MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+            /**/
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z / 150));
 
-            this.baseX = PreviousObject.baseX;
-            this.baseY = PreviousObject.baseY - CellSize * this.YCellMargin;
-            this.baseZ = PreviousObject.baseZ;
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
 
-            if (!((baseX + this.ObjWidth < 300) && (baseY + this.ObjLength < 600) && (baseZ + this.ObjHeight < 300) &&
-              (baseX + this.ObjWidth > 0) && (baseY + this.ObjLength > 0) && (baseZ + this.ObjHeight > 0)))
+            if (VectorMargin.X * VectorMargin.Y > 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            else if (VectorMargin.X * VectorMargin.Y < 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            Point3d pointa = new Point3d(0, 0, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+            Plane planee = new Plane(pointa, pointb);
+
+            Vector3d vecX1 = new Vector3d(1, 0, 0);
+
+            BaseVector = new Vector3d(baseX, baseY, baseZ);
+
+            if (PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y > 0 && VectorObject.Y < 0 || //++
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.Y > 0 || //--
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y > 0 && VectorMargin.X > 0 || //-+
+                PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.X < 0    //+-
+                )
+            {
+                suitableDirection = true;
+            }
+
+            if (!((baseX + this.VectorMargin.X < 300) && (baseY + this.VectorMargin.Y < 600) && (baseZ + this.VectorObject.Z < 300) &&
+              (baseX + this.VectorMargin.X > 0) && (baseY + this.VectorMargin.Y > 0) && (baseZ + this.VectorObject.Z > 0)))
             {
                 inLimits = false;
             }
-            if (inLimits)
+            if (inLimits && suitableDirection)
             {
                 for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                 {
@@ -1231,28 +1318,62 @@ public class Script_Instance : GH_ScriptInstance
         public bool CheckLeft(int[,,] emptyFullArray, int[,,] areaArray)
         {
 
+
             Rhino.RhinoApp.WriteLine("Left is Checked !******************************* ");
             bool inLimits = true;
             bool emptyBool = true;
             bool sameZone = true;
             bool suitableDirection = true;
 
-            this.XCellMargin = Math.Ceiling((double)(this.MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+            /**/
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z / 150));
 
-            this.baseX = PreviousObject.baseX - CellSize * this.XCellMargin;
-            this.baseY = PreviousObject.baseY;
-            this.baseZ = PreviousObject.baseZ;
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
 
-            if (!((baseX + this.ObjWidth < 360) && (baseY + this.ObjLength < 600) && (baseZ + this.ObjHeight < 300) &&
-              (baseX > 0) && (baseY + this.ObjLength > 0) && (baseZ + this.ObjHeight > 0)))
+            if (VectorMargin.X * VectorMargin.Y > 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            else if (VectorMargin.X * VectorMargin.Y < 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            Point3d pointa = new Point3d(0, 0, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+            Plane planee = new Plane(pointa, pointb);
+
+            Vector3d vecX1 = new Vector3d(1, 0, 0);
+
+            BaseVector = new Vector3d(baseX, baseY, baseZ);
+
+            if (PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y > 0 && VectorObject.X < 0 ||
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.X > 0 ||
+                PreviousObject.VectorMargin.X < 0 && PreviousObject.VectorMargin.Y > 0 && VectorMargin.Y < 0 ||
+                PreviousObject.VectorMargin.X > 0 && PreviousObject.VectorMargin.Y < 0 && VectorMargin.Y > 0
+                )
+            {
+                suitableDirection = true;
+            }
+
+
+            if (!((baseX + this.VectorMargin.X < 360) && (baseY + this.VectorMargin.Y < 600) && (baseZ + this.VectorMargin.Z < 300) &&
+              (baseX + this.VectorMargin.X > 0) && (baseY + this.VectorMargin.Y > 0) && (baseZ + this.VectorMargin.Z > 0)))
             {
                 Rhino.RhinoApp.WriteLine("CAN NOT PLACE TO LEFT NOT IN LIMITS!******************************* ");
                 inLimits = false;
             }
 
-            if (inLimits)
+            if (inLimits && suitableDirection)
             {
                 for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                 {
@@ -1332,21 +1453,49 @@ public class Script_Instance : GH_ScriptInstance
 
             bool suitableDirection = true;
 
-            this.XCellMargin = Math.Ceiling((double)(MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+            /**/
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z / 150));
 
-            this.baseX = PreviousObject.baseX;
-            this.baseY = PreviousObject.baseY;
-            this.baseZ = PreviousObject.baseZ + CellSize * PreviousObject.ZCellMargin;
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
 
-            if (!((baseX + this.ObjWidth < 360) && (baseY + this.ObjLength < 600) && (baseZ + this.ObjHeight < 300) &&
-              (baseX + this.ObjWidth > 0) && (baseY + this.ObjLength > 0) && (baseZ + this.ObjHeight > 0)))
+            if (VectorMargin.X * VectorMargin.Y > 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ + PreviousObject.ZCellMargin; ;
+            }
+
+            else if (VectorMargin.X * VectorMargin.Y < 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ + PreviousObject.ZCellMargin;
+            }
+
+            Point3d pointa = new Point3d(0, 0, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+            Plane planee = new Plane(pointa, pointb);
+
+            Vector3d vecX1 = new Vector3d(1, 0, 0);
+
+            BaseVector = new Vector3d(baseX, baseY, baseZ);
+
+            if ( VectorObject.Z > 0) //++
+            {
+                suitableDirection = true;
+            }
+
+            if (!((baseX + this.VectorMargin.X < 360) && (baseY + this.VectorMargin.Y < 600) && (baseZ + this.VectorMargin.Z < 300) &&
+              (baseX + this.VectorMargin.X > 0) && (baseY + this.VectorMargin.Y > 0) && (baseZ + this.VectorMargin.Z > 0)))
             {
                 inLimits = false;
             }
 
-            if (inLimits)
+            if (inLimits && suitableDirection)
             {
                 for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                 {
@@ -1428,13 +1577,42 @@ public class Script_Instance : GH_ScriptInstance
 
             bool suitableDirection = true;
 
-            this.XCellMargin = Math.Ceiling((double)(this.MrjWidth / CellSize));
-            this.YCellMargin = Math.Ceiling((double)(this.MrjLength / CellSize));
-            this.ZCellMargin = Math.Ceiling((double)(this.MrjHeight / 150));
+            /**/
+            this.XCellMargin = (this.VectorMargin.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.X / CellSize));
+            this.YCellMargin = (this.VectorMargin.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Y / CellSize));
+            this.ZCellMargin = (this.VectorMargin.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorMargin.Z / 150));
 
-            this.baseX = PreviousObject.baseX;
-            this.baseY = PreviousObject.baseY;
-            this.baseZ = PreviousObject.baseZ - CellSize * this.ZCellMargin;
+            this.XCellObject = (this.VectorObject.X < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.X / CellSize));
+            this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
+            this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
+
+            if (VectorMargin.X * VectorMargin.Y > 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            else if (VectorMargin.X * VectorMargin.Y < 0)
+            {
+                this.baseX = PreviousObject.baseX;
+                this.baseY = PreviousObject.baseY;
+                this.baseZ = PreviousObject.baseZ;
+            }
+
+            Point3d pointa = new Point3d(0, 0, 0);
+            Vector3d pointb = new Vector3d(0, 0, 1);
+            Plane planee = new Plane(pointa, pointb);
+
+            Vector3d vecX1 = new Vector3d(1, 0, 0);
+
+            BaseVector = new Vector3d(baseX, baseY, baseZ);
+
+
+            if (VectorObject.Z < 0) //++
+            {
+                suitableDirection = true;
+            }
 
             if (!((baseX + this.ObjWidth < 360) && (baseY + this.ObjLength < 600) && (baseZ + this.ObjHeight < 300) &&
               (baseX + this.ObjWidth > 0) && (baseY + this.ObjLength > 0) && (baseZ + this.ObjHeight > 0)))
@@ -1442,7 +1620,7 @@ public class Script_Instance : GH_ScriptInstance
                 inLimits = false;
             }
 
-            if (inLimits)
+            if (inLimits && suitableDirection)
             {
                 for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
                 {
