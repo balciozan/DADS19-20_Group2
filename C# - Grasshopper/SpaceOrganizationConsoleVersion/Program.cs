@@ -11,6 +11,8 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
 using System.Linq;
+using  System.Linq.Enumerable;
+
 
 
 /// <summary>
@@ -657,6 +659,25 @@ public class Script_Instance : GH_ScriptInstance
             this.YCellObject = (this.VectorObject.Y < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Y / CellSize));
             this.ZCellObject = (this.VectorObject.Z < 0 ? -1 : 1) * Math.Ceiling((double)Math.Abs(this.VectorObject.Z / 150));
 
+            int XLoopStartMargin = (int)((int)(baseX / CellSize) < (baseX / CellSize + (int)XCellMargin) ? (int)(baseX / CellSize) : (baseX / CellSize + (int)XCellMargin));
+            int XLoopEndMargin = (int)((int)(baseX / CellSize) > (baseX / CellSize + (int)XCellMargin) ? (int)(baseX / CellSize) : (baseX / CellSize + (int)XCellMargin));
+
+            int YLoopStartMargin = (int)((int)(baseY / CellSize) < baseY / CellSize + (int)YCellMargin ? (int)(baseY / CellSize) : baseY / CellSize + (int)YCellMargin);
+            int YLoopEnMargin = (int)((int)(baseY / CellSize) > baseY / CellSize + (int)YCellMargin ? (int)(baseY / CellSize) : baseY / CellSize + (int)YCellMargin);
+
+            int ZLoopStartMargin = (int)((int)(baseZ / 150) < baseZ / 150 + (int)ZCellMargin ? (int)(baseZ / 150) : baseZ / 150 + (int)ZCellMargin);
+            int ZLoopEndMargin = (int)((int)(baseZ / 150) > baseZ / 150 + (int)ZCellMargin ? (int)(baseZ / 150) : baseZ / 150 + (int)ZCellMargin);
+
+            /***/
+            int XLoopStartObject = (int)((int)(baseX / CellSize) < (baseX / CellSize + (int)XCellObject) ? (int)(baseX / CellSize) : (baseX / CellSize + (int)XCellObject));
+            int XLoopEndObject = (int)((int)(baseX / CellSize) > (baseX / CellSize + (int)XCellObject) ? (int)(baseX / CellSize) : (baseX / CellSize + (int)XCellObject));
+
+            int YLoopStartObject = (int)((int)(baseY / CellSize) < baseY / CellSize + (int)YCellObject ? (int)(baseY / CellSize) : baseY / CellSize + (int)YCellObject);
+            int YLoopEnObject = (int)((int)(baseY / CellSize) > baseY / CellSize + (int)YCellObject ? (int)(baseY / CellSize) : baseY / CellSize + (int)YCellObject);
+
+            int ZLoopStartObject = (int)((int)(baseZ / 150) < baseZ / 150 + (int)ZCellObject ? (int)(baseZ / 150) : baseZ / 150 + (int)ZCellObject);
+            int ZLoopEndObject = (int)((int)(baseZ / 150) > baseZ / 150 + (int)ZCellObject ? (int)(baseZ / 150) : baseZ / 150 + (int)ZCellObject);
+
 
             bool emptyBool = true;
             bool sameZone = true;
@@ -683,14 +704,37 @@ public class Script_Instance : GH_ScriptInstance
                 {
                     inLimit = true;
                 }
+
+
+
+
                 if (inLimit)
                 {
-                    for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
+                    for (int i = XLoopStartMargin; i < XLoopEndMargin; i++)
                     {
-                        for (int j = (int)(baseY / CellSize); j < baseY / CellSize + (int)YCellMargin; j++)
+                        for (int j = YLoopStartMargin; j < YLoopEnMargin; j++)
                         {
-                            for (int k = (int)(baseZ / 150); k < baseZ / 150 + (int)ZCellMargin; k++)
+                            for (int k = ZLoopStartMargin; k < ZLoopEndMargin; k++)
                             {
+                                //Rhino.RhinoApp.WriteLine("Entrance Reference Object :  " + "  i:  " + i + "  j:  " + j + "  k:  " + k);
+                                if (emptyFullArray[i, j, k] == 1)
+                                {
+                                    emptyBool = false;
+                                }
+
+                                if (areaArray[i, j, k] != this.ZoneName || areaArray[i, j, k] != 0)
+                                {
+                                    sameZone = false;
+                                }
+                            }
+                        }
+                    }
+
+                    for (int i = XLoopStartObject; i < XLoopEndObject; i++)
+                    {
+                        for (int j = YLoopStartObject; j < YLoopEnObject; j++)
+                        {
+                            for (int k = ZLoopStartObject; k < ZLoopEndObject; k++)
                                 //Rhino.RhinoApp.WriteLine("Entrance Reference Object :  " + "  i:  " + i + "  j:  " + j + "  k:  " + k);
                                 if (emptyFullArray[i, j, k] == 1)
                                 {
@@ -707,13 +751,28 @@ public class Script_Instance : GH_ScriptInstance
 
                     if (emptyBool && sameZone)
                     {
+
+
+
                         placeSuccessful = true;
                         Rhino.RhinoApp.WriteLine("Reference Object conditions are successful ");
-                        for (int i = (int)(baseX / CellSize); i < (baseX / CellSize + (int)XCellMargin); i++)
+
+                        for (int i = XLoopStartMargin; i < XLoopEndMargin;  i++)
                         {
-                            for (int j = (int)(baseY / CellSize); j < baseY / CellSize + (int)YCellMargin; j++)
+                            for (int j = YLoopStartMargin; j < YLoopEnMargin; j++)
                             {
-                                for (int k = (int)(baseZ / 150); k < baseZ / 150 + (int)ZCellMargin; k++)
+                                for (int k = ZLoopStartMargin; k < ZLoopEndMargin; k++)
+                                {
+                                    emptyFullArray[i, j, k] = 2;
+                                }
+                            }
+                        }
+
+                        for (int i = XLoopStartObject; i < XLoopEndObject; i++)
+                        {
+                            for (int j = YLoopStartObject; j < YLoopEnObject; j++)
+                            {
+                                for (int k = ZLoopStartObject; k < ZLoopEndObject; k++)
                                 {
                                     emptyFullArray[i, j, k] = 1;
                                 }
