@@ -21,6 +21,7 @@ class objectClass
   int objectSource;
   int objectFixed;
 
+
   //PImage img;
 
 
@@ -146,14 +147,18 @@ class objectClass
     }
 
 
+
     int success1 = 0;
     int whilecnt = 0;
+
     while (success1 == 0) {
+
+      whilecnt++;
+
       int rand = 0;
       int realX = 0;
       int realY = 0;
 
-      whilecnt++;
 
       rand = int(random(0, listX.size())); 
       realX = listX.get(rand);
@@ -161,7 +166,11 @@ class objectClass
 
       int success2 = 0;
       int whilecnt2 = 0;
+
       while (success2 == 0 ) {
+
+        whilecnt2++;
+
         int randOpt = 0;
         int objectOpt = 0;
 
@@ -194,11 +203,34 @@ class objectClass
           distY = 0;
         }
 
+        if (position == 1) {
+          listX.clear();
+          listY.clear();
+
+          for (int j=0; j< Ybol; j++)
+          {
+            for (int i=0; i< Xbol; i++)
+            {
+              if (matrix[i][j] == refObject && (i - objectWidth - int(distX) == 0 || i + objectWidth + int(distX) == Xbol - 1 || j - objectDepth - int(distY) == 0 || j + objectDepth + int(distY) == Ybol -1)) {
+                listX.append(i);
+                listY.append(j);
+              }
+            }
+          }
+          if (listX.size() > 0) {
+            rand = int(random(0, listX.size())); 
+            realX = listX.get(rand);
+            realY = listY.get(rand);
+          } else {
+            failCounter++;
+          }
+        }
+
         //println(distH);
         //println(int(distX));
         //println(int(distY));
 
-        whilecnt2++;
+
 
         if (realX - objectWidth - int(distX) < 0 && realY - objectDepth - int(distY) < 0 && realY + objectDepth + int(distY) < Ybol && realX + objectWidth + int(distX) < Xbol) {  // Left upper corner -- add only to right and down
           listPos.append(2);

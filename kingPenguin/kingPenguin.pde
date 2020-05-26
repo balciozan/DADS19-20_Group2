@@ -25,6 +25,7 @@ int cyanSize = 0;
 //int yellowSize = 0; No longer needed
 
 int objectTrigger = 0; // Integer which starts the object placing part of the algorithm when it is equal to 1.
+int failCounter = 0; // Counts the number of errors occured in one cycle.
 
 // Defining the objects of growCell class for each zone.
 growCell red;
@@ -76,6 +77,7 @@ void setup()
   //yellowSize = 0; No longer needed
   loopCounter = 0;
   objectTrigger = 0;
+  failCounter = 0;
 
 
 
