@@ -98,8 +98,9 @@ class objectClass
     }
   }
 
-  void placeObject(int refObject, int method, int dist) { // Function for placing dependent objects.
+  void placeObject(int refObject, int position, int method, int dist) { // Function for placing dependent objects.
     // refObject is the reference for the object to be placed.
+    // position determines the relation between walls and the objects. 0 = no relation / 1 = next to wall.
     // method can have 3 values for now. 0 = no relation / 1 = near to / 2 = next to.
     // if the method is equal to 1, dist will determine the range.
     listX = new IntList();
@@ -160,9 +161,23 @@ class objectClass
         listPos = new IntList();
         listPos.clear();
 
+       
+        if(method == 0){
+        distH = int(random(0,12));
+        distX = sqrt(random(0, sq(distH) + 1));
+        distY = sqrt(sq(distH) - sq(distX));
+        }
+        else if(method == 1){
+        //distH = int(random(0,dist+1));
         distH = dist;
         distX = sqrt(random(0, sq(distH) + 1));
         distY = sqrt(sq(distH) - sq(distX));
+        }
+        else if(method == 2){
+        distH = 0;
+        distX = 0;
+        distY = 0;
+        }
 
         //println(distH);
         //println(int(distX));
