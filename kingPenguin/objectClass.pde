@@ -154,7 +154,7 @@ class objectClass
     while (success1 == 0) {
 
       whilecnt++;
-      //println(whilecnt);
+      println(whilecnt);
 
       int rand = 0;
       int realX = 0;
@@ -448,7 +448,7 @@ class objectClass
               success1++;
             }
           }
-        } else if (whilecnt2 >= 1000) {
+        }  if (whilecnt2 >= 1000) {
           success2++;
         }
       }
