@@ -4,7 +4,7 @@ class objectClass
   IntList listY;
   IntList listPos;
   IntList listSide;
-  
+
   String objectName;
   int objectValue;
   int objectZoneValue;
@@ -45,7 +45,8 @@ class objectClass
     objectB = oB;
   }
 
-  void referenceObject() { // Function for placing reference objects. Each zone has 1 reference object.
+  void referenceObject(int position) { // Function for placing reference objects. Each zone has 1 reference object.
+    // position determines the relation between walls and the objects. 0 = no relation / 1 = next to wall.
     listX = new IntList();
     listY = new IntList();
     listX.clear();
@@ -76,7 +77,23 @@ class objectClass
       realX = listX.get(rand);
       realY = listY.get(rand);
 
-      if (realX + objectWidth -1 <= listX.max() && realY + objectDepth -1 <= listY.max()) {
+      if (position == 0 && realX + objectWidth -1 <= listX.max() && realY + objectDepth -1 <= listY.max()) {
+        for (int i = realX; i < realX + objectWidth; i++)
+        {
+          for (int j= realY; j< realY + objectDepth; j++)
+          {
+            int newi = i;
+            int newj = j;
+            matrix[newi][newj] = objectValue;
+            fill(objectR, objectG, objectB);
+            noStroke();
+            rect((width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+            //img = loadImage(objectName+".png");
+            //image(img, (width/Xbol)*newi, (height/Ybol)*newj, (width/Xbol), (height/Ybol));
+          }
+        }
+        success1++;
+      } else if (position == 1 && (realX == 0 || realX == Xbol - objectWidth || realY == 0 || realY == Ybol - objectDepth) && realX + objectWidth -1 <= listX.max() && realY + objectDepth -1 <= listY.max()) {
         for (int i = realX; i < realX + objectWidth; i++)
         {
           for (int j= realY; j< realY + objectDepth; j++)
@@ -111,7 +128,7 @@ class objectClass
     listSide.clear();
     listSide.append(-1);
     listSide.append(1);
-    
+
 
     float distX = 0;
     float distY = 0;
@@ -147,36 +164,34 @@ class objectClass
       while (success2 == 0 ) {
         int randOpt = 0;
         int objectOpt = 0;
-       
+
         int randXSide = 0;
         int randYSide = 0;
         int randSidePicker = 0;
-        
+
         randSidePicker = int(random(0, 2));
         randXSide = listSide.get(randSidePicker);
-        
+
         randSidePicker = int(random(0, 2));
         randYSide = listSide.get(randSidePicker);
-        
+
         listPos = new IntList();
         listPos.clear();
 
-       
-        if(method == 0){
-        distH = int(random(0,12));
-        distX = sqrt(random(0, sq(distH) + 1));
-        distY = sqrt(sq(distH) - sq(distX));
-        }
-        else if(method == 1){
-        //distH = int(random(0,dist+1));
-        distH = dist;
-        distX = sqrt(random(0, sq(distH) + 1));
-        distY = sqrt(sq(distH) - sq(distX));
-        }
-        else if(method == 2){
-        distH = 0;
-        distX = 0;
-        distY = 0;
+
+        if (method == 0) {
+          distH = int(random(0, 12));
+          distX = sqrt(random(0, sq(distH) + 1));
+          distY = sqrt(sq(distH) - sq(distX));
+        } else if (method == 1) {
+          //distH = int(random(0,dist+1));
+          distH = dist;
+          distX = sqrt(random(0, sq(distH) + 1));
+          distY = sqrt(sq(distH) - sq(distX));
+        } else if (method == 2) {
+          distH = 0;
+          distX = 0;
+          distY = 0;
         }
 
         //println(distH);
@@ -195,7 +210,7 @@ class objectClass
           listPos.append(3);
           listPos.append(4);
           randOpt = int(random(0, listPos.size()));
-          objectOpt = listPos.get(randOpt); 
+          objectOpt = listPos.get(randOpt);
         } else if (realX + objectWidth + int(distX) >= Xbol && realY - objectDepth - int(distY) < 0 && realY + objectDepth + int(distY) < Ybol && realX - objectWidth - int(distX) >= 0) {  // Right upper corner -- add only to down and left
           listPos.append(3);
           listPos.append(4);
@@ -240,7 +255,7 @@ class objectClass
 
         //println(whilecnt2);
         //println(whilecnt);
-        
+
         //println("realX " + realX);
         //println("realY " + realY);
         //println("DistX " + int(distX));
