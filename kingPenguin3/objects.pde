@@ -3,15 +3,37 @@ void objects() {
  //  (int method, int dist, int longside, int rotate, refobject)**info
  //rotate 0, 1, 2 = no rotate, rotate,random**info FOR ACTIVATE ROTATE ADD INFO ALSO TO THE OBJECT
  //longside 0,1,2= random, add to up/down-longside, add to right/left**info
-    kitchenUnit.referenceObject();
+ 
+ //GROUP 1**********************************************
+ 
+   kitchenUnit.referenceObject();
    table.placeObject(2,0,1,1,kitchenUnit);
    chair.placeObject(2, 0,0,0, table);
-//chair.placeObject(2, 0,0,0, table);
-     //bed.referenceObject();
-  // monitor.referenceObject();
+ //chair.placeObject(2, 0,0,0, table);
+ bed.referenceObject();
+ monitor.referenceObject();
+ 
+    toilet.referenceObject(); 
+    sink.placeObject(2, 0,0,0,toilet);
+    showerCabin.placeObject(2, 0,0,0,sink);    
+   dressingCabin.placeObject(2, 0,0,0,showerCabin);
+    personalCloset.placeObject(2, 0,0,0,dressingCabin);
+    
+    exteriorDoor.referenceObject();
+    changeoverZone.placeObject(2, 0,0,0,exteriorDoor);
+  // closet.placeObject(2, 0,0,0,changeoverZone);
+   // connectionDoor.placeObject(2, 0,0,0,closet);
+    //add wall to the border
+
+    
+ 
+ //GROUP 2**********************************************
      
-    showerCabin.referenceObject();
-    toilet.placeObject(2, 0,0,0,showerCabin);
+
+
+
+ 
+     
 
     saveFrame("Results/alternative-##.png");
     println("success");

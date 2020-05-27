@@ -42,6 +42,13 @@ objectClass bed;
 objectClass monitor;
 objectClass toilet;
 objectClass showerCabin;
+objectClass exteriorDoor;
+objectClass connectionDoor;
+objectClass changeoverZone;
+objectClass closet;
+objectClass sink;
+objectClass dressingCabin;
+objectClass personalCloset;
 
 int [][] matrix = new int[Xbol][Ybol]; 
 
@@ -60,13 +67,24 @@ void setup()
 
 
   //objectClass(String oName, int oValue, int oZoneValue, int oWidth, int oDepth, int oHeight, int oMarLeft, int oMarRight, int oMarFront, int oMarRear, int oFixed, int oSource, int oR, int oG, int oB)
-  table = new objectClass("table", 101, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100,1);
-  chair = new objectClass("chair", 111, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 90, 200, 90);
+  //LIVING AREA OBJECTS
   kitchenUnit = new objectClass("kitchen unit", 121, 1, 3, 1, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
+  table = new objectClass("table", 101, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100,1);
+  chair = new objectClass("chair", 111, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 90, 200, 90); 
   bed = new objectClass("bed", 131, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 90, 100, 250);
   monitor = new objectClass("monitor", 141, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 100, 90);
- toilet = new objectClass("toilet", 221, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 40, 10, 120);
-  showerCabin = new objectClass("shower cabin", 201, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 30, 60, 90);
+  //WET AREA OBJECTS
+  toilet = new objectClass("toilet", 221, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 40, 10, 120);
+  showerCabin = new objectClass("shower cabin", 201, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 30, 60, 0);
+  sink= new objectClass("Sink and Cupboard", 211, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
+  dressingCabin= new objectClass("Dressing Cabin", 231, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
+  personalCloset= new objectClass("Personal Closet", 241, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 10, 10, 90);
+  //ENTRANCE AREA OBJECTS
+  exteriorDoor = new objectClass("Exterior Door", 301, 5, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 90);
+  connectionDoor = new objectClass("Connection Door", 311, 5, 1, 2, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
+  changeoverZone = new objectClass("Changeover Zone", 321, 5, 1, 1, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
+  closet = new objectClass("Closet", 331, 5, 1, 2, 0, 0, 0, 0, 0, 0, 0, 90, 0, 90);
+  
   
   redSize = 0;
   greenSize = 0;
