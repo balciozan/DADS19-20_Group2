@@ -4,6 +4,9 @@ void objects() {
  //rotate 0, 1, 2 = no rotate, rotate,random**info FOR ACTIVATE ROTATE ADD INFO ALSO TO THE OBJECT
  //longside 0,1,2= random, add to up/down-longside, add to right/left**info
  
+ int optionNumber= int(random(2));
+ if (optionNumber == 0)
+ {
  //GROUP 1**********************************************
  
    kitchenUnit.referenceObject();
@@ -25,10 +28,32 @@ void objects() {
    // connectionDoor.placeObject(2, 0,0,0,closet);
     //add wall to the border
 
-    
+ } 
  
  //GROUP 2**********************************************
-     
+   else if (optionNumber == 1)
+ {
+ 
+   kitchenUnit.referenceObject();
+   table.placeObject(2,0,1,1,kitchenUnit);
+   chair.placeObject(2, 0,0,0, table);
+ //chair.placeObject(2, 0,0,0, table);
+ bed.referenceObject();
+ monitor.referenceObject();
+ 
+  //  toilet.referenceObject(); 
+  //  sink.placeObject(2, 0,0,0,toilet);
+   // showerCabin.placeObject(2, 0,0,0,sink);    
+   //dressingCabin.placeObject(2, 0,0,0,showerCabin);
+   // personalCloset.placeObject(2, 0,0,0,dressingCabin);
+    
+   // exteriorDoor.referenceObject();
+   // changeoverZone.placeObject(2, 0,0,0,exteriorDoor);
+  // closet.placeObject(2, 0,0,0,changeoverZone);
+   // connectionDoor.placeObject(2, 0,0,0,closet);
+    //add wall to the border
+
+ }   
 
 
 
