@@ -28,13 +28,13 @@ class growCell
 
   growCell(String cName, int cValue, int cSize, int cBorder, int cR, int cG, int cB) {
 
-    colorName = cName;
-    colorValue = cValue;
-    colorR = cR;
-    colorG = cG;
-    colorB = cB;
-    colorSize = cSize;
-    colorBorder = cBorder;
+    colorName = cName; // NAME OF THE ZONE
+    colorValue = cValue; // RANDOM VALUE BETWEEN 0 - 100
+    colorR = cR; // R VALUE OF THE COLOR
+    colorG = cG; // G VALUE OF THE COLOR
+    colorB = cB; // B VALUE OF THE COLOR
+    colorSize = cSize; // MOMENTARILY AMOUNT OF CELLS (not an input, should be counter stars from 0)
+    colorBorder = cBorder; // AREA (amount of cell) OF THE ZONE
   }
 
   void firstCell() { // Function for creating the first cells. Runs only one time in each organization alternative.

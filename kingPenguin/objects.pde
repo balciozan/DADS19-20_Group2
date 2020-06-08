@@ -11,6 +11,6 @@ void objects() {
     if(failCounter == 0){
       //saveFrame("Results/alternative-##.png");
     }
-    setup();
+    //setup();
   }
 }
